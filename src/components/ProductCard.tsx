@@ -12,6 +12,11 @@ interface ProductCardProps {
   isNew?: boolean;
   isSale?: boolean;
   salePrice?: number;
+  itemNo?: string;
+  diameter?: string;
+  inStock?: number;
+  deliveryTime?: string;
+  currency?: string;
 }
 
 const ProductCard = ({
@@ -22,7 +27,12 @@ const ProductCard = ({
   hoverImage,
   isNew = false,
   isSale = false,
-  salePrice
+  salePrice,
+  itemNo,
+  diameter,
+  inStock,
+  deliveryTime,
+  currency = "AED"
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -76,14 +86,20 @@ const ProductCard = ({
         <Link to={`/product/${id}`} className="block">
           <h3 className="text-sm font-medium hover:text-[#4CAF50] transition-colors">{name}</h3>
         </Link>
+        {itemNo && (
+          <p className="text-xs text-gray-500 mt-1">Item no. {itemNo}</p>
+        )}
+        {diameter && (
+          <p className="text-xs text-gray-500 mt-1">Ø {diameter}</p>
+        )}
         <div className="mt-1">
           {isSale && salePrice ? (
             <div className="flex items-center justify-center gap-2">
-              <span className="text-[#E53935] font-medium">{salePrice} AED</span>
-              <span className="text-gray-400 line-through">{price} AED</span>
+              <span className="text-[#E53935] font-medium">{salePrice} {currency}</span>
+              <span className="text-gray-400 line-through">{price} {currency}</span>
             </div>
           ) : (
-            <span className="text-gray-800">{price} AED</span>
+            <span className="text-gray-800">{price} {currency}</span>
           )}
         </div>
       </div>
