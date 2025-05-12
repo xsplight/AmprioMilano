@@ -81,6 +81,22 @@ const Layout = ({ children }: LayoutProps) => {
                 </li>
                 <li>
                   <Link 
+                    to="/products" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/products' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
+                  >
+                    All Products
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/collections" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
+                  >
+                    Collections
+                  </Link>
+                </li>
+                <li>
+                  <Link 
                     to="/tableware" 
                     className={`uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
@@ -105,14 +121,6 @@ const Layout = ({ children }: LayoutProps) => {
                 </li>
                 <li>
                   <Link 
-                    to="/collections" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
-                  >
-                    Collections
-                  </Link>
-                </li>
-                <li>
-                  <Link 
                     to="/horeca" 
                     className={`uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
@@ -132,12 +140,12 @@ const Layout = ({ children }: LayoutProps) => {
 
             {/* Icons */}
             <div className="flex items-center space-x-4">
-              <button aria-label="Search" className="hover:text-brand-green transition-colors">
+              <Link to="/search" aria-label="Search" className="hover:text-brand-green transition-colors">
                 <Search size={20} />
-              </button>
-              <button aria-label="Account" className="hover:text-brand-green transition-colors">
+              </Link>
+              <Link to="/account" aria-label="Account" className="hover:text-brand-green transition-colors">
                 <User size={20} />
-              </button>
+              </Link>
               <button 
                 aria-label="Cart" 
                 className="flex items-center group hover:text-brand-green transition-colors"
@@ -165,6 +173,22 @@ const Layout = ({ children }: LayoutProps) => {
                 </li>
                 <li>
                   <Link 
+                    to="/products" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/products' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
+                  >
+                    All Products
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/collections" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green font-medium' : 'text-gray-700'}`}
+                  >
+                    Collections
+                  </Link>
+                </li>
+                <li>
+                  <Link 
                     to="/tableware" 
                     className={`block uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
@@ -185,14 +209,6 @@ const Layout = ({ children }: LayoutProps) => {
                     className={`block uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     Outdoor
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    to="/collections" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
-                  >
-                    Collections
                   </Link>
                 </li>
                 <li>
