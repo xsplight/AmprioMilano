@@ -1,4 +1,5 @@
 
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -99,7 +100,15 @@
     @apply transition-transform duration-300 hover:scale-105;
   }
   
-  .animate-fade-in {
-    @apply opacity-0 animate-fade-in;
+  /* Fixed the circular dependency by removing the self-reference */
+  .fade-in-element {
+    @apply opacity-0;
+    animation: fadeIn 0.8s ease-out forwards;
   }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
