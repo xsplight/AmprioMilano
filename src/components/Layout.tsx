@@ -28,83 +28,117 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <>
+      {/* Announcement Bar */}
+      <div className="bg-[#2e7d32] text-white py-1 px-4 text-sm">
+        <div className="container-custom flex justify-between items-center">
+          <div>FAST SHIPPING IN UAE <a href="#" className="underline ml-1">learn more</a></div>
+          <div>+971 52 177 3471</div>
+        </div>
+      </div>
+
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
+        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white'
         }`}
       >
-        <div className="container-custom flex items-center justify-between py-4">
-          {/* Mobile menu button */}
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-
+        <div className="container-custom flex flex-col items-center py-4">
           {/* Logo */}
-          <Link to="/" className="font-serif text-2xl font-bold">
-            AMPRIO<span className="text-gold-DEFAULT">MILANO</span>
+          <Link to="/" className="mb-4">
+            <div className="text-center">
+              <div className="font-serif text-3xl font-bold text-[#4CAF50]">
+                AMPRIO MILANO
+              </div>
+              <div className="text-sm uppercase tracking-wider text-gray-500">
+                GOURMET TABLEWARE & DECOR
+              </div>
+            </div>
           </Link>
 
-          {/* Desktop navigation */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-8">
-              <li>
-                <Link 
-                  to="/" 
-                  className={`uppercase text-sm tracking-wide ${location.pathname === '/' ? 'font-medium' : ''}`}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/shop" 
-                  className={`uppercase text-sm tracking-wide ${location.pathname === '/shop' ? 'font-medium' : ''}`}
-                >
-                  Shop
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/collections" 
-                  className={`uppercase text-sm tracking-wide ${location.pathname.includes('/collections') ? 'font-medium' : ''}`}
-                >
-                  Collections
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/about" 
-                  className={`uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'font-medium' : ''}`}
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/contact" 
-                  className={`uppercase text-sm tracking-wide ${location.pathname === '/contact' ? 'font-medium' : ''}`}
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <div className="w-full flex items-center justify-between">
+            {/* Mobile menu button */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
 
-          {/* Icons */}
-          <div className="flex items-center space-x-4">
-            <button aria-label="Search">
-              <Search size={20} />
-            </button>
-            <button aria-label="Account">
-              <User size={20} />
-            </button>
-            <button aria-label="Cart">
-              <ShoppingBag size={20} />
-            </button>
+            {/* Desktop navigation */}
+            <nav className="hidden md:block flex-grow">
+              <ul className="flex justify-center space-x-8">
+                <li>
+                  <Link 
+                    to="/" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    New In
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/tableware" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    Tableware
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/interior" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    Interior Accents
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/outdoor" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    Outdoor
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/collections" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    Collections
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/horeca" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    HoReCa
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/about" 
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                  >
+                    About
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            {/* Icons */}
+            <div className="flex items-center space-x-4">
+              <button aria-label="Search">
+                <Search size={20} />
+              </button>
+              <button aria-label="Account">
+                <User size={20} />
+              </button>
+              <button aria-label="Cart" className="flex items-center">
+                <ShoppingBag size={20} />
+                <span className="ml-1">— 0</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -116,41 +150,57 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/' ? 'font-medium' : ''}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
                   >
-                    Home
+                    New In
                   </Link>
                 </li>
                 <li>
                   <Link 
-                    to="/shop" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/shop' ? 'font-medium' : ''}`}
+                    to="/tableware" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
                   >
-                    Shop
+                    Tableware
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/interior" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                  >
+                    Interior Accents
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/outdoor" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                  >
+                    Outdoor
                   </Link>
                 </li>
                 <li>
                   <Link 
                     to="/collections" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname.includes('/collections') ? 'font-medium' : ''}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
                   >
                     Collections
                   </Link>
                 </li>
                 <li>
                   <Link 
-                    to="/about" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'font-medium' : ''}`}
+                    to="/horeca" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
                   >
-                    About
+                    HoReCa
                   </Link>
                 </li>
                 <li>
                   <Link 
-                    to="/contact" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/contact' ? 'font-medium' : ''}`}
+                    to="/about" 
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
                   >
-                    Contact
+                    About
                   </Link>
                 </li>
               </ul>
@@ -159,7 +209,7 @@ const Layout = ({ children }: LayoutProps) => {
         )}
       </header>
 
-      <main className="pt-24 min-h-screen">
+      <main className="min-h-screen">
         {children}
       </main>
 

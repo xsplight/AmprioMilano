@@ -3,30 +3,31 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import ProductGrid from '../components/ProductGrid';
-import { Heart, Share2, TruckIcon, RefreshCcw, Minus, Plus } from 'lucide-react';
+import { Heart, Share2, TruckIcon, RefreshCcw, Minus, Plus, ArrowLeft } from 'lucide-react';
 
 // Mock product data
 const product = {
   id: 1,
-  name: "Milano Leather Handbag",
-  price: 1290,
-  description: "Crafted from fine Italian leather, this handbag embodies luxury and sophistication with its timeless design and meticulous attention to detail. The Milano Leather Handbag features a spacious interior with multiple pockets for organization, a secure zipper closure, and an adjustable shoulder strap.",
+  name: "Milano Dinner Plate - Versailles",
+  price: 120,
+  description: "Exquisite dinner plate from the Versailles collection featuring elegant blue and white porcelain design with intricate details. Perfect for formal dining settings and special occasions. Each piece is carefully crafted to bring timeless sophistication to your table.",
   details: [
-    "Premium full-grain leather",
-    "Handcrafted in Italy",
-    "Signature gold-tone hardware",
-    "Cotton twill lining",
-    "Interior zip pocket and two slip pockets",
-    "Adjustable leather shoulder strap",
-    "Dimensions: 11.8\"L x 8.7\"H x 4.7\"D"
+    "Premium porcelain material",
+    "Handcrafted with attention to detail",
+    "Dishwasher safe",
+    "Diameter: 28 cm",
+    "Made in Italy",
+    "Microwave safe",
+    "Part of the Versailles collection"
   ],
-  colors: ["Black", "Brown", "Burgundy", "Beige"],
-  materials: ["Full-grain leather", "Gold-tone hardware"],
+  colors: ["Blue", "Green", "Gold", "White"],
+  materials: ["Porcelain"],
+  sku: "PLAIVER01",
   images: [
-    "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=870&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?q=80&w=870&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1591561954555-607968c989ab?q=80&w=774&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=757&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1621977300786-8f262903e67c?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1622428051717-dcd9565a8ce5?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?q=80&w=2074&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1621977300786-8f262903e67c?q=80&w=2070&auto=format&fit=crop"
   ]
 };
 
@@ -34,31 +35,31 @@ const product = {
 const relatedProducts = [
   {
     id: 2,
-    name: "Cashmere Blend Sweater",
-    price: 680,
-    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop"
+    name: "Crystal Water Glass - Sapphire",
+    price: 75,
+    image: "https://images.unsplash.com/photo-1622428052287-fd531d664b3e?q=80&w=2070&auto=format&fit=crop"
   },
   {
     id: 3,
-    name: "Statement Gold Earrings",
-    price: 450,
-    image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=776&auto=format&fit=crop",
+    name: "Porcelain Teacup - Azure",
+    price: 65,
+    image: "https://images.unsplash.com/photo-1550701035-c0bb32de8aca?q=80&w=2070&auto=format&fit=crop",
     isNew: true
   },
   {
     id: 4,
-    name: "Classic Cotton Blazer",
-    price: 890,
-    image: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?q=80&w=774&auto=format&fit=crop",
+    name: "Gold Rim Wine Glass",
+    price: 89,
+    image: "https://images.unsplash.com/photo-1617902213861-1260401a6fcc?q=80&w=2070&auto=format&fit=crop",
     isSale: true,
-    salePrice: 690
+    salePrice: 69
   }
 ];
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
   const [mainImage, setMainImage] = useState(product.images[0]);
-  const [selectedColor, setSelectedColor] = useState('Black');
+  const [selectedColor, setSelectedColor] = useState('Blue');
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
 
@@ -74,7 +75,26 @@ const Product = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12">
+      {/* Breadcrumb */}
+      <div className="bg-[#f8f8f8] py-3 border-b border-gray-200">
+        <div className="container-custom">
+          <div className="flex items-center text-sm">
+            <Link to="/" className="text-gray-500 hover:text-gold-DEFAULT">Home</Link>
+            <span className="mx-2 text-gray-400">/</span>
+            <span className="text-gray-800">{product.name}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="container-custom py-8">
+        {/* Back button */}
+        <div className="mb-6">
+          <Link to="/" className="inline-flex items-center text-sm text-gray-600 hover:text-gold-DEFAULT transition-colors">
+            <ArrowLeft size={16} className="mr-1" />
+            Back
+          </Link>
+        </div>
+        
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Product Images */}
           <div className="lg:w-3/5">
@@ -98,11 +118,11 @@ const Product = () => {
               
               {/* Main Image */}
               <div className="md:w-4/5">
-                <div className="aspect-square md:aspect-[4/5] w-full bg-fashion-gray/20">
+                <div className="aspect-square md:aspect-[4/5] w-full">
                   <img 
                     src={mainImage} 
                     alt={product.name} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
@@ -111,23 +131,41 @@ const Product = () => {
           
           {/* Product Details */}
           <div className="lg:w-2/5">
-            <h1 className="text-3xl font-serif mb-3">{product.name}</h1>
-            <p className="text-2xl font-medium mb-6">${product.price.toFixed(2)}</p>
+            <div className="mb-4 flex justify-between items-start">
+              <div>
+                <h1 className="text-2xl font-serif mb-1">{product.name}</h1>
+                <p className="text-sm text-gray-600 mb-3">Baci Milano</p>
+                <p className="text-sm text-gray-500 mb-2">{product.sku}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xl font-medium">{product.price} AED</p>
+              </div>
+            </div>
+            
+            {/* Material and Size */}
+            <div className="mb-6 border-t border-gray-200 pt-4">
+              <div className="mb-2">
+                <span className="font-medium text-sm">Materials:</span> {product.materials.join(', ')}
+              </div>
+              <div className="mb-4">
+                <span className="font-medium text-sm">Size:</span> DIAM 28 cm
+              </div>
+            </div>
             
             {/* Color Selection */}
             <div className="mb-6">
-              <h3 className="text-sm uppercase tracking-wider mb-3">Color: <span className="font-medium">{selectedColor}</span></h3>
+              <h3 className="text-sm font-medium mb-3">Color: <span>{selectedColor}</span></h3>
               <div className="flex gap-2">
                 {product.colors.map(color => (
                   <button
                     key={color}
                     onClick={() => setSelectedColor(color)}
-                    className={`w-10 h-10 border ${selectedColor === color ? 'ring-2 ring-gold-DEFAULT' : 'border-gray-300'}`}
+                    className={`w-8 h-8 border ${selectedColor === color ? 'ring-2 ring-gold-DEFAULT' : 'border-gray-300'}`}
                     style={{ 
-                      backgroundColor: color === 'Black' ? '#121212' : 
-                                     color === 'Brown' ? '#5D4037' : 
-                                     color === 'Burgundy' ? '#800020' : 
-                                     color === 'Beige' ? '#F5F5DC' : ''
+                      backgroundColor: color === 'Blue' ? '#3b5998' : 
+                                     color === 'Green' ? '#4CAF50' : 
+                                     color === 'Gold' ? '#D4AF37' : 
+                                     color === 'White' ? '#FFFFFF' : ''
                     }}
                     aria-label={`Select ${color} color`}
                   ></button>
@@ -137,7 +175,7 @@ const Product = () => {
             
             {/* Quantity Selector */}
             <div className="mb-6">
-              <h3 className="text-sm uppercase tracking-wider mb-3">Quantity</h3>
+              <h3 className="text-sm font-medium mb-3">Quantity</h3>
               <div className="flex">
                 <button 
                   onClick={handleDecrement}
@@ -158,26 +196,41 @@ const Product = () => {
             </div>
             
             {/* Add to Cart & Wishlist */}
-            <div className="flex gap-4 mb-8">
-              <button className="flex-grow py-3 bg-fashion-black text-white uppercase text-sm tracking-wider hover:bg-gold-DEFAULT transition-colors">
-                Add to Cart
+            <div className="flex flex-col gap-4 mb-6">
+              <button className="w-full py-3 bg-[#4CAF50] text-white uppercase text-sm tracking-wider hover:bg-[#45a049] transition-colors">
+                Add to Cart — {product.price} AED
               </button>
-              <button className="w-12 aspect-square border border-gray-300 flex items-center justify-center hover:bg-fashion-black hover:text-white transition-colors">
-                <Heart size={18} />
+              
+              <div className="flex gap-4">
+                <button className="flex-1 py-2 border border-gray-300 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors">
+                  <Heart size={16} />
+                  <span>Wishlist</span>
+                </button>
+                <button className="flex-1 py-2 border border-gray-300 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors">
+                  <Share2 size={16} />
+                  <span>Share</span>
+                </button>
+              </div>
+            </div>
+            
+            {/* Sharing options */}
+            <div className="flex gap-4 mb-6">
+              <button className="text-sm text-gray-600 hover:text-gold-DEFAULT transition-colors">
+                WhatsApp
               </button>
-              <button className="w-12 aspect-square border border-gray-300 flex items-center justify-center hover:bg-fashion-black hover:text-white transition-colors">
-                <Share2 size={18} />
+              <button className="text-sm text-gray-600 hover:text-gold-DEFAULT transition-colors">
+                Email
               </button>
             </div>
             
             {/* Services */}
-            <div className="space-y-3 border-t border-b border-gray-200 py-6 mb-8">
+            <div className="space-y-3 border-t border-b border-gray-200 py-6 mb-6">
               <div className="flex items-center">
-                <TruckIcon size={18} className="mr-3" />
-                <span className="text-sm">Free shipping on orders over $250</span>
+                <TruckIcon size={18} className="mr-3 text-[#4CAF50]" />
+                <span className="text-sm">Fast shipping in UAE</span>
               </div>
               <div className="flex items-center">
-                <RefreshCcw size={18} className="mr-3" />
+                <RefreshCcw size={18} className="mr-3 text-[#4CAF50]" />
                 <span className="text-sm">Free returns within 30 days</span>
               </div>
             </div>
@@ -187,16 +240,16 @@ const Product = () => {
               <div className="flex">
                 <button
                   onClick={() => setActiveTab('description')}
-                  className={`py-3 px-4 text-sm uppercase tracking-wider ${
-                    activeTab === 'description' ? 'border-b-2 border-fashion-black font-medium' : 'text-gray-500'
+                  className={`py-3 px-4 text-sm ${
+                    activeTab === 'description' ? 'border-b-2 border-[#4CAF50] font-medium' : 'text-gray-500'
                   }`}
                 >
                   Description
                 </button>
                 <button
                   onClick={() => setActiveTab('details')}
-                  className={`py-3 px-4 text-sm uppercase tracking-wider ${
-                    activeTab === 'details' ? 'border-b-2 border-fashion-black font-medium' : 'text-gray-500'
+                  className={`py-3 px-4 text-sm ${
+                    activeTab === 'details' ? 'border-b-2 border-[#4CAF50] font-medium' : 'text-gray-500'
                   }`}
                 >
                   Details
@@ -205,7 +258,7 @@ const Product = () => {
             </div>
             
             {/* Tab Content */}
-            <div className="text-sm leading-relaxed text-fashion-black/80">
+            <div className="text-sm leading-relaxed text-gray-700">
               {activeTab === 'description' && (
                 <p>{product.description}</p>
               )}
@@ -226,6 +279,7 @@ const Product = () => {
           <ProductGrid
             products={relatedProducts}
             title="You May Also Like"
+            subtitle="Related Products"
             columns={3}
           />
         </div>
