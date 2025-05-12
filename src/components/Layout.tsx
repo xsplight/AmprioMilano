@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, Search, User } from 'lucide-react';
 import Footer from './Footer';
+import Cart from './Cart';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -29,7 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-[#2e7d32] text-white py-1 px-4 text-sm">
+      <div className="pattern-bg text-white py-2 px-4 text-sm">
         <div className="container-custom flex justify-between items-center">
           <div>FAST SHIPPING IN UAE <a href="#" className="underline ml-1">learn more</a></div>
           <div>+971 52 177 3471</div>
@@ -37,7 +39,7 @@ const Layout = ({ children }: LayoutProps) => {
       </div>
 
       <header
-        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled ? 'bg-white shadow-sm' : 'bg-white'
         }`}
       >
@@ -45,10 +47,12 @@ const Layout = ({ children }: LayoutProps) => {
           {/* Logo */}
           <Link to="/" className="mb-4">
             <div className="text-center">
-              <div className="font-serif text-3xl font-bold text-[#4CAF50]">
-                AMPRIO MILANO
-              </div>
-              <div className="text-sm uppercase tracking-wider text-gray-500">
+              <img 
+                src="https://cdn.shopify.com/s/files/1/0592/5152/3702/files/AMP_LOGO_FULL.svg?v=1735227680" 
+                alt="Amprio Milano" 
+                className="h-16"
+              />
+              <div className="text-sm uppercase tracking-wider text-gray-500 mt-1">
                 GOURMET TABLEWARE & DECOR
               </div>
             </div>
@@ -70,7 +74,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     New In
                   </Link>
@@ -78,7 +82,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/tableware" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     Tableware
                   </Link>
@@ -86,7 +90,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/interior" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     Interior Accents
                   </Link>
@@ -94,7 +98,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/outdoor" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     Outdoor
                   </Link>
@@ -102,7 +106,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/collections" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     Collections
                   </Link>
@@ -110,7 +114,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/horeca" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     HoReCa
                   </Link>
@@ -118,7 +122,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/about" 
-                    className={`uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-[#4CAF50] font-medium' : 'text-gray-700 hover:text-[#4CAF50]'}`}
+                    className={`uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-brand-green font-medium' : 'text-gray-700 hover:text-brand-green'}`}
                   >
                     About
                   </Link>
@@ -128,14 +132,18 @@ const Layout = ({ children }: LayoutProps) => {
 
             {/* Icons */}
             <div className="flex items-center space-x-4">
-              <button aria-label="Search">
+              <button aria-label="Search" className="hover:text-brand-green transition-colors">
                 <Search size={20} />
               </button>
-              <button aria-label="Account">
+              <button aria-label="Account" className="hover:text-brand-green transition-colors">
                 <User size={20} />
               </button>
-              <button aria-label="Cart" className="flex items-center">
-                <ShoppingBag size={20} />
+              <button 
+                aria-label="Cart" 
+                className="flex items-center group hover:text-brand-green transition-colors"
+                onClick={() => setIsCartOpen(true)}
+              >
+                <ShoppingBag size={20} className="group-hover:animate-cart-bounce" />
                 <span className="ml-1">— 0</span>
               </button>
             </div>
@@ -150,7 +158,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     New In
                   </Link>
@@ -158,7 +166,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/tableware" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/tableware' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     Tableware
                   </Link>
@@ -166,7 +174,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/interior" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname.includes('/interior') ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     Interior Accents
                   </Link>
@@ -174,7 +182,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/outdoor" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/outdoor' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     Outdoor
                   </Link>
@@ -182,7 +190,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/collections" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/collections' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     Collections
                   </Link>
@@ -190,7 +198,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/horeca" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/horeca' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     HoReCa
                   </Link>
@@ -198,7 +206,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/about" 
-                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-[#4CAF50] font-medium' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide ${location.pathname === '/about' ? 'text-brand-green font-medium' : 'text-gray-700'}`}
                   >
                     About
                   </Link>
@@ -214,6 +222,13 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <Footer />
+
+      {/* Shopping Cart Slide-out */}
+      <div className={`fixed inset-0 bg-black/30 z-40 transition-opacity ${isCartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsCartOpen(false)}
+      ></div>
+      
+      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 };

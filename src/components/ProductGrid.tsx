@@ -10,6 +10,10 @@ interface Product {
   isNew?: boolean;
   isSale?: boolean;
   salePrice?: number;
+  itemNo?: string;
+  diameter?: string;
+  inStock?: number;
+  deliveryTime?: string;
 }
 
 interface ProductGridProps {
@@ -17,13 +21,15 @@ interface ProductGridProps {
   title?: string;
   subtitle?: string;
   columns?: 2 | 3 | 4;
+  layout?: 'grid' | 'list';
 }
 
 const ProductGrid = ({ 
   products,
   title,
   subtitle,
-  columns = 4
+  columns = 4,
+  layout = 'grid'
 }: ProductGridProps) => {
   const getGridClass = () => {
     switch (columns) {
@@ -37,13 +43,63 @@ const ProductGrid = ({
     }
   };
 
+  if (layout === 'list') {
+    return (
+      <section className="py-8">
+        <div className="container-custom">
+          {/* Optional section header */}
+          {(title || subtitle) && (
+            <div className="text-center mb-8">
+              {subtitle && <p className="uppercase tracking-wider text-sm text-brand-green mb-2">{subtitle}</p>}
+              {title && <h2 className="text-2xl md:text-3xl font-serif">{title}</h2>}
+            </div>
+          )}
+          
+          {/* Product list */}
+          <div className="space-y-8">
+            {products.map((product) => (
+              <div key={product.id} className="product-line-item animate-hover-scale">
+                <div className="product-line-image">
+                  <img src={product.image} alt={product.name} className="w-full h-auto" />
+                </div>
+                <div className="product-line-details">
+                  <h3 className="line-item-title">{product.name}</h3>
+                  {product.itemNo && (
+                    <p className="text-sm text-gray-500">Item no. {product.itemNo}</p>
+                  )}
+                  {product.diameter && (
+                    <p className="text-sm text-gray-500">Ø {product.diameter}</p>
+                  )}
+                  <div className="flex items-center my-2">
+                    {product.isSale && product.salePrice ? (
+                      <>
+                        <span className="text-[#E53935] font-medium mr-2">{product.salePrice} AED</span>
+                        <span className="text-gray-400 line-through">{product.price} AED</span>
+                      </>
+                    ) : (
+                      <span className="font-medium">{product.price} AED</span>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <button className="fashion-btn">Add to Cart</button>
+                    <button className="fashion-btn-outline">View Details</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16">
       <div className="container-custom">
         {/* Optional section header */}
         {(title || subtitle) && (
           <div className="text-center mb-12">
-            {subtitle && <p className="uppercase tracking-wider text-sm text-gold-DEFAULT mb-2">{subtitle}</p>}
+            {subtitle && <p className="uppercase tracking-wider text-sm text-brand-green mb-2">{subtitle}</p>}
             {title && <h2 className="text-3xl md:text-4xl font-serif">{title}</h2>}
           </div>
         )}

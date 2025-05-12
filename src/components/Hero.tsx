@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const slides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1589363660859-19c1c4f35f4b?q=80&w=1920&auto=format&fit=crop',
+    image: 'https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910',
     title: 'Fall/Winter Collection',
     subtitle: 'LUXURY REIMAGINED',
     cta: 'Explore Collection',
@@ -41,7 +41,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-[80vh] md:h-screen w-full overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
