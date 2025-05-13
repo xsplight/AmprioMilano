@@ -33,7 +33,7 @@ const Layout = ({ children }: LayoutProps) => {
       {/* Announcement Bar */}
       <div className="bg-brand-green text-white py-2 px-4 text-sm">
         <div className="container-custom flex justify-between items-center">
-          <div>FAST SHIPPING IN UAE <a href="#" className="underline ml-1">learn more</a></div>
+          <div>FAST SHIPPING IN UAE <a href="/shipping" className="underline ml-1">learn more</a></div>
           <div>+971 52 177 3471</div>
         </div>
       </div>
@@ -49,7 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
             <img 
               src="https://cdn.shopify.com/s/files/1/0592/5152/3702/files/AMP_LOGO_FULL.svg?v=1735227680" 
               alt="Amprio Milano" 
-              className="h-20"
+              className="h-24" // Increased from h-20 to h-24
             />
           </Link>
 
@@ -69,7 +69,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     New In
                   </Link>
@@ -77,7 +77,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/products" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/products' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/products' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     All Products
                   </Link>
@@ -85,7 +85,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/collections" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     Collections
                   </Link>
@@ -93,7 +93,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/tableware" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/tableware' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/tableware' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     Tableware
                   </Link>
@@ -101,7 +101,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/interior" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname.includes('/interior') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname.includes('/interior') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     Interior
                   </Link>
@@ -109,7 +109,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/outdoor" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/outdoor' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/outdoor' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     Outdoor
                   </Link>
@@ -117,7 +117,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/contact" 
-                    className={`uppercase text-base tracking-wide font-medium ${location.pathname === '/contact' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    className={`uppercase text-sm tracking-wide font-medium ${location.pathname === '/contact' ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
                   >
                     Contact
                   </Link>
@@ -153,7 +153,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/' ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/' ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     New In
                   </Link>
@@ -161,7 +161,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/products" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/products' ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/products' ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     All Products
                   </Link>
@@ -169,7 +169,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/collections" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/collections' || location.pathname.startsWith('/collection/') ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     Collections
                   </Link>
@@ -177,7 +177,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/tableware" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/tableware' ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/tableware' ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     Tableware
                   </Link>
@@ -185,7 +185,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/interior" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname.includes('/interior') ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname.includes('/interior') ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     Interior
                   </Link>
@@ -193,7 +193,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/outdoor" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/outdoor' ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/outdoor' ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     Outdoor
                   </Link>
@@ -201,9 +201,41 @@ const Layout = ({ children }: LayoutProps) => {
                 <li>
                   <Link 
                     to="/contact" 
-                    className={`block uppercase text-base tracking-wide font-medium ${location.pathname === '/contact' ? 'text-brand-green' : 'text-gray-700'}`}
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/contact' ? 'text-brand-green' : 'text-gray-700'}`}
                   >
                     Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/about" 
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/about' ? 'text-brand-green' : 'text-gray-700'}`}
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/shipping" 
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/shipping' ? 'text-brand-green' : 'text-gray-700'}`}
+                  >
+                    Shipping
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/returns" 
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/returns' ? 'text-brand-green' : 'text-gray-700'}`}
+                  >
+                    Returns
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/privacy" 
+                    className={`block uppercase text-sm tracking-wide font-medium ${location.pathname === '/privacy' ? 'text-brand-green' : 'text-gray-700'}`}
+                  >
+                    Privacy Policy
                   </Link>
                 </li>
               </ul>
