@@ -47,7 +47,7 @@ const ProductCard = ({
     >
       {/* Product image */}
       <Link to={`/product/${id}`} className="block relative overflow-hidden">
-        <div className="aspect-square w-full bg-[#f8f8f8]">
+        <div className="aspect-square w-full">
           <img
             src={isHovered && hoverImage ? hoverImage : (image || defaultImage)}
             alt={name}
@@ -56,7 +56,7 @@ const ProductCard = ({
         </div>
         
         {/* Quick actions */}
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <div className="translate-y-4 group-hover:translate-y-0 transition-transform">
             <div className="flex gap-2">
               <button 
@@ -122,11 +122,10 @@ const ProductCard = ({
         )}
       </div>
 
-      {/* Quick view modal - would need to implement this functionality */}
+      {/* Quick view modal */}
       {isQuickViewVisible && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setIsQuickViewVisible(false)}>
           <div className="bg-white p-6 max-w-3xl w-full max-h-[90vh] overflow-auto" onClick={e => e.stopPropagation()}>
-            {/* Quick view content would go here */}
             <button 
               className="absolute top-4 right-4 text-gray-600 hover:text-brand-green"
               onClick={() => setIsQuickViewVisible(false)}

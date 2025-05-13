@@ -8,14 +8,14 @@ const slides = [
     id: 1,
     image: 'https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910',
     title: 'Fall/Winter Collection',
-    subtitle: 'LUXURY REIMAGINED',
+    subtitle: 'LUXURY TABLEWARE',
     cta: 'Explore Collection',
     link: '/collections/winter'
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1920&auto=format&fit=crop',
-    title: 'Exclusive Designs',
+    title: 'Premium Melamine',
     subtitle: 'CRAFTED WITH PASSION',
     cta: 'Shop Now',
     link: '/shop'
@@ -23,7 +23,7 @@ const slides = [
   {
     id: 3,
     image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?q=80&w=1920&auto=format&fit=crop',
-    title: 'Artisan Accessories',
+    title: 'Artisan Home Decor',
     subtitle: 'HANDMADE EXCELLENCE',
     cta: 'Discover More',
     link: '/collections/accessories'
@@ -41,7 +41,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative h-[80vh] md:h-screen w-full overflow-hidden">
+    <section className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -61,13 +61,13 @@ const Hero = () => {
           </div>
           
           <div className="relative h-full flex items-center">
-            <div className="container-custom">
+            <div className="container-custom max-w-[1600px] w-full">
               <div className="max-w-lg text-white animate-fade-in">
-                <h2 className="uppercase text-sm tracking-[0.2em] mb-2 font-medium">{slide.subtitle}</h2>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light mb-6">{slide.title}</h1>
+                <h2 className="uppercase text-base tracking-[0.2em] mb-3 font-medium">{slide.subtitle}</h2>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-6">{slide.title}</h1>
                 <Link to={slide.link} className="group inline-flex items-center">
-                  <span className="mr-2 uppercase text-sm tracking-wider border-b border-white pb-1 transition-all group-hover:border-gold-DEFAULT">{slide.cta}</span>
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-2" />
+                  <span className="mr-2 uppercase text-base tracking-wider border-b border-white pb-1 transition-all group-hover:border-gold-DEFAULT">{slide.cta}</span>
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-2" />
                 </Link>
               </div>
             </div>
@@ -77,7 +77,7 @@ const Hero = () => {
 
       {/* Slide indicators */}
       <div className="absolute bottom-8 left-0 right-0">
-        <div className="container-custom">
+        <div className="container-custom max-w-[1600px]">
           <div className="flex space-x-3">
             {slides.map((_, index) => (
               <button
