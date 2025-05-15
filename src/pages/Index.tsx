@@ -12,66 +12,35 @@ import { motion } from 'framer-motion';
 const featuredProducts = [
   {
     id: 1,
-    name: "Milano Leather Handbag",
-    price: 1290,
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=870&auto=format&fit=crop",
-    hoverImage: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?q=80&w=870&auto=format&fit=crop",
+    name: "Dinner Plate - Ortigia Collection",
+    price: 120,
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     isNew: true
   },
   {
     id: 2,
-    name: "Cashmere Blend Sweater",
-    price: 680,
-    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop",
-    hoverImage: "https://images.unsplash.com/photo-1543076659-9380cdf10613?q=80&w=764&auto=format&fit=crop"
+    name: "Coffee Cup with Saucer - Milano",
+    price: 85,
+    image: "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780"
   },
   {
     id: 3,
-    name: "Statement Gold Earrings",
-    price: 450,
-    image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=776&auto=format&fit=crop",
-    hoverImage: "https://images.unsplash.com/photo-1635767798638-3665a293d406?q=80&w=776&auto=format&fit=crop",
+    name: "Dessert Bowl - Ortigia Collection",
+    price: 95,
+    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
     isNew: true
   },
   {
     id: 4,
-    name: "Classic Cotton Blazer",
-    price: 890,
-    image: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?q=80&w=774&auto=format&fit=crop",
-    hoverImage: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=774&auto=format&fit=crop",
+    name: "Wine Glass Set - Crystal Collection",
+    price: 110,
+    image: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
     isSale: true,
-    salePrice: 690
-  }
-];
-
-const newArrivals = [
-  {
-    id: 5,
-    name: "Designer Silk Scarf",
-    price: 320,
-    image: "https://images.unsplash.com/photo-1621184455862-c163dfb30e0f?q=80&w=871&auto=format&fit=crop",
-    isNew: true
-  },
-  {
-    id: 6,
-    name: "Premium Leather Belt",
-    price: 260,
-    image: "https://images.unsplash.com/photo-1624222247344-550fb8052c89?q=80&w=1170&auto=format&fit=crop",
-    isNew: true
-  },
-  {
-    id: 7,
-    name: "Milano Dress Shoes",
-    price: 790,
-    image: "https://images.unsplash.com/photo-1605733160314-4fc7dac4bb16?q=80&w=1190&auto=format&fit=crop",
-    isNew: true
-  },
-  {
-    id: 8,
-    name: "Italian Wool Coat",
-    price: 1450,
-    image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=774&auto=format&fit=crop",
-    isNew: true
+    salePrice: 90
   }
 ];
 
@@ -87,21 +56,21 @@ const collections = [
   {
     id: 2,
     name: "Versailles Collection",
-    image: "https://images.unsplash.com/photo-1601459433261-a1e88c7aae4e?q=80&w=1974&auto=format&fit=crop",
+    image: "https://ampriomilano.com/cdn/shop/files/AMAZZONIA_600x.jpg?v=1733497346",
     link: "/collection/versailles",
     description: "Timeless elegance inspired by the grandeur of French palaces, perfect for formal dining experiences."
   },
   {
     id: 3,
     name: "Milano Collection",
-    image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1734&auto=format&fit=crop",
+    image: "https://ampriomilano.com/cdn/shop/files/CPS2_970cf00b-8562-465b-a52c-99d6ef3c11b3_800x.jpg?v=1737945188",
     link: "/collection/milano",
     description: "Modern sophistication with an Italian flair, designed for contemporary dining spaces."
   },
   {
     id: 4,
     name: "Coastal Collection",
-    image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1974&auto=format&fit=crop",
+    image: "https://ampriomilano.com/cdn/shop/files/SET_TABLE_4_800x.jpg?v=1708334587",
     link: "/collection/coastal",
     description: "Inspired by the Mediterranean coastline, featuring fresh blues and sandy neutrals."
   }
@@ -210,7 +179,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <img 
-                src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1170&auto=format&fit=crop" 
+                src="https://ampriomilano.com/cdn/shop/files/SET_TABLE_3_800x.jpg?v=1708334587" 
                 alt="Amprio Milano craftsmanship" 
                 className="w-full h-auto rounded-lg shadow-lg" 
               />
@@ -461,84 +430,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* New arrivals section */}
-      <ProductGrid 
-        products={newArrivals} 
-        title="New Arrivals" 
-        subtitle="Latest Collection"
-      />
-      
-      {/* Collections grid */}
-      <section className="py-16 bg-fashion-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif">Browse Collections</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Women Collection */}
-            <div className="relative group overflow-hidden h-[500px]">
-              <img 
-                src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=686&auto=format&fit=crop" 
-                alt="Women's Collection" 
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end">
-                <div className="p-8 w-full text-white">
-                  <h3 className="text-2xl font-serif mb-4">Women</h3>
-                  <Link 
-                    to="/collections/women" 
-                    className="inline-block border-b border-white pb-1 uppercase text-sm tracking-wider hover:border-gold-DEFAULT hover:text-gold-DEFAULT transition-colors"
-                  >
-                    View Collection
-                  </Link>
-                </div>
-              </div>
-            </div>
-            
-            {/* Men Collection */}
-            <div className="relative group overflow-hidden h-[500px]">
-              <img 
-                src="https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?q=80&w=1170&auto=format&fit=crop" 
-                alt="Men's Collection" 
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end">
-                <div className="p-8 w-full text-white">
-                  <h3 className="text-2xl font-serif mb-4">Men</h3>
-                  <Link 
-                    to="/collections/men" 
-                    className="inline-block border-b border-white pb-1 uppercase text-sm tracking-wider hover:border-gold-DEFAULT hover:text-gold-DEFAULT transition-colors"
-                  >
-                    View Collection
-                  </Link>
-                </div>
-              </div>
-            </div>
-            
-            {/* Accessories Collection */}
-            <div className="relative group overflow-hidden h-[500px]">
-              <img 
-                src="https://images.unsplash.com/photo-1612902456551-333ac5afa26e?q=80&w=688&auto=format&fit=crop" 
-                alt="Accessories Collection" 
-                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end">
-                <div className="p-8 w-full text-white">
-                  <h3 className="text-2xl font-serif mb-4">Accessories</h3>
-                  <Link 
-                    to="/collections/accessories" 
-                    className="inline-block border-b border-white pb-1 uppercase text-sm tracking-wider hover:border-gold-DEFAULT hover:text-gold-DEFAULT transition-colors"
-                  >
-                    View Collection
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       {/* Newsletter section */}
       <section className="py-16 bg-fashion-gray/30">
         <div className="container-custom">
@@ -560,6 +451,48 @@ const Index = () => {
                 Subscribe
               </button>
             </form>
+          </div>
+        </div>
+      </section>
+      
+      {/* Contact Information */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-serif mb-3">Contact Us</h2>
+          </div>
+          
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="mb-2 text-lg font-medium">T. +971 52 177 3471</p>
+            <p className="mb-6">E. info@amprio.ae</p>
+            <p className="mb-2 font-medium">@ampriomilano</p>
+            
+            <div className="mt-8">
+              <p className="font-medium">Office:</p>
+              <p>1802 Ontario Tower, Business Bay, Dubai UAE</p>
+            </div>
+            
+            <div className="mt-8 flex justify-center space-x-4">
+              <a href="#" className="text-brand-green hover:text-brand-lightGreen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+              </a>
+              <a href="#" className="text-brand-green hover:text-brand-lightGreen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-brand-green hover:text-brand-lightGreen">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect width="4" height="12" x="2" y="9"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>

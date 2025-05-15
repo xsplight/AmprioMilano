@@ -101,13 +101,13 @@ const ProductCard = ({
   
   return (
     <div 
-      className="group relative"
+      className="group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product image */}
-      <Link to={`/product/${id}`} className="block relative overflow-hidden">
-        <div className="aspect-square w-full">
+      <Link to={`/product/${id}`} className="block relative">
+        <div className="aspect-square w-full overflow-hidden">
           <img
             src={isHovered && hoverImage ? hoverImage : (image || defaultImage)}
             alt={name}

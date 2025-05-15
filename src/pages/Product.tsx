@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -32,9 +33,9 @@ const product = {
   deliveryTime: "4-5 working days",
   images: [
     "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
-    "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
-    "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
-    "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+    "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780",
+    "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
+    "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478"
   ]
 };
 
@@ -55,7 +56,7 @@ const sameLine = [
     id: 3,
     name: "Ecume White dinner plate \"Shogun\", with small center",
     price: 100.36,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    image: "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780",
     itemNo: "65016",
     diameter: "29.5 cm",
     inStock: 32,
@@ -66,7 +67,7 @@ const sameLine = [
     id: 4,
     name: "Ecume White dinner plate, large",
     price: 98.22,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
     itemNo: "35970",
     diameter: "29.5 cm",
     inStock: 27,
@@ -81,20 +82,20 @@ const relatedProducts = [
     id: 5,
     name: "Crystal Water Glass - Sapphire",
     price: 75,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500"
   },
   {
     id: 6,
     name: "Porcelain Teacup - Azure",
     price: 65,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    image: "https://ampriomilano.com/cdn/shop/files/SER1.MAM01_38535f72-c5c9-4f51-a7b1-a606c5fa947f_400x.png?v=1737391443",
     isNew: true
   },
   {
     id: 7,
     name: "Gold Rim Wine Glass",
     price: 89,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    image: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
     isSale: true,
     salePrice: 69
   }
@@ -104,21 +105,21 @@ const relatedProducts = [
 const recentlyViewed = [
   {
     id: 8,
-    name: "Silver Dessert Spoon",
+    name: "Fine Silver Dessert Spoon",
     price: 45,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+    image: "https://ampriomilano.com/cdn/shop/files/SER1.MAM01_38535f72-c5c9-4f51-a7b1-a606c5fa947f_400x.png?v=1737391443"
   },
   {
     id: 9,
     name: "Gold Plated Serving Fork",
     price: 55,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500"
   },
   {
     id: 10,
-    name: "Marble Cutting Board",
+    name: "Premium Ceramic Serving Bowl",
     price: 120,
-    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880"
   }
 ];
 
@@ -208,14 +209,28 @@ const Product = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex flex-col-reverse md:flex-row gap-4">
+            <div className="flex flex-col gap-4">
+              {/* Main Image */}
+              <div className="w-full">
+                <motion.div 
+                  className="aspect-square md:aspect-[4/5] w-full bg-[#f8f8f8]"
+                  layoutId={`product-image-${id}`}
+                >
+                  <img 
+                    src={mainImage} 
+                    alt={product.name} 
+                    className="w-full h-full object-contain"
+                  />
+                </motion.div>
+              </div>
+              
               {/* Thumbnails */}
-              <div className="md:w-1/5 flex md:flex-col gap-2 pt-2 md:pt-0">
+              <div className="w-full flex gap-2">
                 {product.images.map((img, index) => (
                   <motion.button 
                     key={index}
                     onClick={() => setMainImage(img)}
-                    className={`aspect-square border ${mainImage === img ? 'border-brand-green' : 'border-gray-200'}`}
+                    className={`aspect-square w-24 ${mainImage === img ? 'ring-2 ring-brand-green' : ''}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -226,20 +241,6 @@ const Product = () => {
                     />
                   </motion.button>
                 ))}
-              </div>
-              
-              {/* Main Image */}
-              <div className="md:w-4/5">
-                <motion.div 
-                  className="aspect-square md:aspect-[4/5] w-full bg-[#f8f8f8] rounded-sm p-4"
-                  layoutId={`product-image-${id}`}
-                >
-                  <img 
-                    src={mainImage} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain"
-                  />
-                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -283,11 +284,46 @@ const Product = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="mb-2">
-                <span className="font-medium text-sm">Materials:</span> {product.materials.join(', ')}
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+                    <path d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 19H14.01M14.5 19C14.5 19.2761 14.2761 19.5 14 19.5C13.7239 19.5 13.5 19.2761 13.5 19C13.5 18.7239 13.7239 18.5 14 18.5C14.2761 18.5 14.5 18.7239 14.5 19Z" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M14 15L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M14 15L13.5 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M14 15L16.5 15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <span className="font-medium text-sm">Materials:</span> {product.materials.join(', ')}
+                </div>
               </div>
-              <div className="mb-4">
-                <span className="font-medium text-sm">Size:</span> {product.diameter}
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <line x1="21.17" x2="12" y1="8" y2="8"/>
+                    <line x1="3.95" x2="8.54" y1="6.06" y2="14"/>
+                    <line x1="10.88" x2="15.46" y1="21.94" y2="14"/>
+                  </svg>
+                </div>
+                <div>
+                  <span className="font-medium text-sm">Size:</span> {product.diameter}
+                </div>
+              </div>
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+                    <path d="m16 6 4 14"/>
+                    <path d="M12 6v14"/>
+                    <path d="M8 8v12"/>
+                    <path d="M4 4v16"/>
+                  </svg>
+                </div>
+                <div>
+                  <span className="font-medium text-sm">SKU:</span> {product.sku}
+                </div>
               </div>
             </motion.div>
             

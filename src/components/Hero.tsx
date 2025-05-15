@@ -14,7 +14,7 @@ const slides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1920&auto=format&fit=crop',
+    image: 'https://ampriomilano.com/cdn/shop/files/AMAZZONIA_600x.jpg?v=1733497346',
     title: 'Premium Melamine',
     subtitle: 'CRAFTED WITH PASSION',
     cta: 'Shop Now',
@@ -22,7 +22,7 @@ const slides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?q=80&w=1920&auto=format&fit=crop',
+    image: 'https://ampriomilano.com/cdn/shop/files/SET_TABLE_3_800x.jpg?v=1708334587',
     title: 'Artisan Home Decor',
     subtitle: 'HANDMADE EXCELLENCE',
     cta: 'Discover More',
