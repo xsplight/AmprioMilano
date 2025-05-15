@@ -18,13 +18,14 @@ import Privacy from "./pages/Privacy";
 import Search from "./pages/Search";
 import Checkout from "./pages/Checkout";
 import Thanks from "./pages/Thanks";
+import Account from "./pages/Account";
 
+// Add Framer Motion animation settings for route transitions
 const queryClient = new QueryClient();
 
 const App = () => (
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      {/* Move TooltipProvider inside BrowserRouter and QueryClientProvider */}
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -42,7 +43,7 @@ const App = () => (
           <Route path="/search" element={<Search />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/thanks" element={<Thanks />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/account" element={<Account />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </TooltipProvider>

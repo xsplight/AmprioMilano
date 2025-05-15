@@ -16,6 +16,7 @@ interface ProductCardProps {
   inStock?: number;
   deliveryTime?: string;
   currency?: string;
+  category?: string;
 }
 
 const ProductCard = ({
@@ -31,11 +32,72 @@ const ProductCard = ({
   diameter,
   inStock,
   deliveryTime,
-  currency = "AED"
+  currency = "AED",
+  category
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const defaultImage = "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234";
+  
+  // HoReCa category icon
+  const renderCategoryIcon = () => {
+    if (!category) return null;
+    
+    let icon = null;
+    
+    switch(category) {
+      case 'restaurant':
+        icon = (
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/>
+            <path d="M6 7v-2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+            <path d="M3 7h18"/>
+            <path d="M9 14v2"/>
+            <path d="M15 14v2"/>
+          </svg>
+        );
+        break;
+      case 'hotel':
+        icon = (
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16"/>
+            <path d="M5 12h14"/>
+            <path d="M9 12v5"/>
+            <path d="M15 12v5"/>
+            <path d="M3 21h18"/>
+          </svg>
+        );
+        break;
+      case 'beach':
+        icon = (
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 22a20.3 20.3 0 0 1 20 0"/>
+            <path d="M12 6a4 4 0 0 0-4 7h8a4 4 0 0 0-4-7z"/>
+            <path d="M12 3v3"/>
+            <path d="m6.82 7.3 2.12 2.13"/>
+            <path d="m15.06 9.43 2.12-2.13"/>
+          </svg>
+        );
+        break;
+      case 'yacht':
+        icon = (
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+            <path d="m20 20-5-18h-4c0 3-2 5-5 5v3a7 7 0 0 0 7 7h9.5"/>
+            <path d="M12 11h0"/>
+          </svg>
+        );
+        break;
+      default:
+        return null;
+    }
+    
+    return (
+      <div className="absolute top-2 right-2 bg-white/80 p-1 rounded-full" title={`Recommended for ${category}`}>
+        {icon}
+      </div>
+    );
+  };
   
   return (
     <div 
@@ -66,6 +128,9 @@ const ProductCard = ({
             </span>
           )}
         </div>
+        
+        {/* Category icon for HoReCa products */}
+        {renderCategoryIcon()}
       </Link>
 
       {/* Product info */}
