@@ -1,14 +1,26 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ShoppingBag } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+
+// Create context for cart state
+export const CartContext = createContext({
+  items: [] as CartItem[],
+  addToCart: (item: CartItem) => {},
+  removeItem: (id: number) => {},
+  updateQuantity: (id: number, quantity: number) => {},
+  itemCount: 0,
+});
+
+export const useCart = () => useContext(CartContext);
 
 interface CartProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-interface CartItem {
+export interface CartItem {
   id: number;
   name: string;
   price: number;
@@ -16,8 +28,7 @@ interface CartItem {
   quantity: number;
 }
 
-const Cart = ({ isOpen, onClose }: CartProps) => {
-  // Mock cart items - in a real app, these would come from context/state
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -34,13 +45,30 @@ const Cart = ({ isOpen, onClose }: CartProps) => {
       quantity: 2
     }
   ]);
+  const { toast } = useToast();
 
-  // Calculate total
-  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 20;
-  const total = subtotal + shipping;
+  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
-  // Update quantity of an item
+  const addToCart = (item: CartItem) => {
+    const existingItem = items.find(i => i.id === item.id);
+    
+    if (existingItem) {
+      setItems(items.map(i => 
+        i.id === item.id 
+          ? { ...i, quantity: i.quantity + item.quantity } 
+          : i
+      ));
+    } else {
+      setItems([...items, item]);
+    }
+    
+    toast({
+      title: "Item added to cart",
+      description: `${item.name} has been added to your cart.`,
+      duration: 3000,
+    });
+  };
+
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity < 1) return;
     
@@ -49,10 +77,24 @@ const Cart = ({ isOpen, onClose }: CartProps) => {
     ));
   };
 
-  // Remove item from cart
   const removeItem = (id: number) => {
     setItems(items.filter(item => item.id !== id));
   };
+
+  return (
+    <CartContext.Provider value={{ items, addToCart, removeItem, updateQuantity, itemCount }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+const Cart = ({ isOpen, onClose }: CartProps) => {
+  const { items, updateQuantity, removeItem, itemCount } = useCart();
+
+  // Calculate total
+  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const shipping = 20;
+  const total = subtotal + shipping;
 
   // Prevent body scrolling when cart is open
   useEffect(() => {
@@ -77,7 +119,7 @@ const Cart = ({ isOpen, onClose }: CartProps) => {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-medium">Your Cart</h2>
+            <h2 className="text-lg font-medium">Your Cart ({itemCount} items)</h2>
             <button 
               onClick={onClose}
               className="p-2 rounded-full hover:bg-gray-100 transition-colors"

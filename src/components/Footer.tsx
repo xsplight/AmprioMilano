@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Twitter } from 'lucide-react';
+import { Instagram, Facebook, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -29,8 +29,8 @@ const Footer = () => {
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-DEFAULT transition-colors" aria-label="Follow on Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-DEFAULT transition-colors" aria-label="Follow on Twitter">
-                <Twitter size={20} />
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-DEFAULT transition-colors" aria-label="Follow on LinkedIn">
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
@@ -59,25 +59,21 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter column */}
+          {/* Contact Info Column (replacing Newsletter) */}
           <div>
-            <h3 className="font-medium uppercase tracking-wider mb-6 text-base">Newsletter</h3>
-            <p className="text-sm text-white/90 mb-4">
-              Subscribe to receive updates, access to exclusive deals, and more.
-            </p>
-            <form className="flex">
-              <input 
-                type="email" 
-                placeholder="Your email" 
-                className="bg-white/10 border border-white/30 py-2 px-3 text-sm flex-grow focus:outline-none focus:border-gold-DEFAULT"
-              />
-              <button 
-                type="submit" 
-                className="bg-white text-brand-green py-2 px-4 text-sm uppercase tracking-wider hover:bg-gold-DEFAULT hover:text-white transition-colors"
-              >
-                Join
-              </button>
-            </form>
+            <h3 className="font-medium uppercase tracking-wider mb-6 text-base">Contact Us</h3>
+            <ul className="space-y-3 text-sm text-white/90">
+              <li>T: <a href="tel:+97152177347" className="hover:text-gold-DEFAULT transition-colors">+971 52 177 3471</a></li>
+              <li>E: <a href="mailto:info@amprio.ae" className="hover:text-gold-DEFAULT transition-colors">info@amprio.ae</a></li>
+              <li className="pt-1">@ampriomilano</li>
+              <li className="pt-2">Office:</li>
+              <li>1802 Ontario Tower, Business Bay, Dubai UAE</li>
+            </ul>
+            <div className="flex mt-6 space-x-4">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-DEFAULT transition-colors">
+                <img src="/lovable-uploads/e27b5ed6-867b-45e1-b186-7600041beb58.png" alt="Social icons" className="h-8" />
+              </a>
+            </div>
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CreditCard, Check, ArrowRight } from 'lucide-react';
+import { MapPin, CreditCard, ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { motion } from 'framer-motion';
+import { useCart } from '@/components/Cart';
 
 // Form schema using zod
 const formSchema = z.object({
@@ -33,6 +34,12 @@ const Checkout = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { items } = useCart();
+  
+  // Calculate order totals
+  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const shipping = 20;
+  const total = subtotal + shipping;
   
   // Initialize form
   const form = useForm<FormValues>({
@@ -78,7 +85,7 @@ const Checkout = () => {
     
     try {
       // Simulate API call to Shopify
-      console.log('Submitting order data:', { ...data, coordinates });
+      console.log('Submitting order data:', { ...data, coordinates, items });
       
       // Mock API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -372,6 +379,27 @@ const Checkout = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-6"
                   >
+                    {/* Display order items with thumbnails */}
+                    <div className="bg-gray-50 p-6 rounded-md">
+                      <h3 className="font-medium text-lg mb-4">Order Items</h3>
+                      <ul className="space-y-4">
+                        {items.map(item => (
+                          <li key={item.id} className="flex gap-4 items-center">
+                            <div className="w-16 h-16 bg-white border rounded">
+                              <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-medium">{item.name}</p>
+                              <p className="text-gray-500 text-sm">Quantity: {item.quantity}</p>
+                            </div>
+                            <div className="font-medium">
+                              {(item.price * item.quantity).toFixed(2)} AED
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
                     {/* Order summary */}
                     <div className="bg-gray-50 p-6 rounded-md space-y-4">
                       <h3 className="font-medium text-lg mb-4">Order Summary</h3>
@@ -379,15 +407,15 @@ const Checkout = () => {
                       <div className="space-y-4">
                         <div className="flex justify-between">
                           <span className="text-gray-600">Subtotal</span>
-                          <span>320.00 AED</span>
+                          <span>{subtotal.toFixed(2)} AED</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Shipping</span>
-                          <span>20.00 AED</span>
+                          <span>{shipping.toFixed(2)} AED</span>
                         </div>
                         <div className="flex justify-between border-t pt-2 font-medium">
                           <span>Total</span>
-                          <span>340.00 AED</span>
+                          <span>{total.toFixed(2)} AED</span>
                         </div>
                       </div>
                     </div>
