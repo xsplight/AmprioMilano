@@ -7,6 +7,7 @@ import ProductLineSection from '../components/ProductLineSection';
 import RelatedProducts from '../components/RelatedProducts';
 import { motion } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from '../components/Cart';
 import Cart from '../components/Cart';
 
 // Mock product data (в будущем будет заменено на API)
@@ -131,7 +132,9 @@ const Product = () => {
   const [activeTab, setActiveTab] = useState('description');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
+  const { addToCart } = useCart();
   
   // Animation variants
   const fadeIn = {
@@ -150,6 +153,15 @@ const Product = () => {
   };
   
   const handleAddToCart = () => {
+    // Add item to cart with current quantity
+    addToCart({
+      id: Number(id) || product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      quantity: quantity
+    });
+    
     // Show success animation
     setAddedToCart(true);
     
@@ -169,6 +181,15 @@ const Product = () => {
     setTimeout(() => {
       setIsCartOpen(true);
     }, 800);
+  };
+
+  const handleToggleWishlist = () => {
+    setIsWishlisted(!isWishlisted);
+    toast({
+      title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+      description: isWishlisted ? `${product.name} removed from your wishlist` : `${product.name} added to your wishlist`,
+      duration: 3000,
+    });
   };
 
   return (
@@ -202,7 +223,7 @@ const Product = () => {
         </motion.div>
         
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* Product Images */}
+          {/* Product Images - Changed layout to vertical with images below */}
           <motion.div 
             className="lg:w-3/5"
             initial={{ opacity: 0 }}
@@ -210,10 +231,10 @@ const Product = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-col gap-4">
-              {/* Main Image */}
+              {/* Main Image - removed border and overflow */}
               <div className="w-full">
                 <motion.div 
-                  className="aspect-square md:aspect-[4/5] w-full bg-[#f8f8f8]"
+                  className="aspect-square md:aspect-[4/5] w-full"
                   layoutId={`product-image-${id}`}
                 >
                   <img 
@@ -224,20 +245,20 @@ const Product = () => {
                 </motion.div>
               </div>
               
-              {/* Thumbnails */}
-              <div className="w-full flex gap-2">
+              {/* Thumbnails below main image */}
+              <div className="w-full flex gap-2 justify-center">
                 {product.images.map((img, index) => (
                   <motion.button 
                     key={index}
                     onClick={() => setMainImage(img)}
-                    className={`aspect-square w-24 ${mainImage === img ? 'ring-2 ring-brand-green' : ''}`}
+                    className={`aspect-square w-24 ${mainImage === img ? 'ring-2 ring-brand-green' : 'hover:opacity-80'}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <img 
                       src={img} 
                       alt={`${product.name} - view ${index + 1}`} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </motion.button>
                 ))}
@@ -277,16 +298,16 @@ const Product = () => {
               </div>
             </motion.div>
             
-            {/* Material and Size */}
+            {/* Material and Size - Improved icons */}
             <motion.div 
               className="mb-6 border-t border-gray-200 pt-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
                     <path d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M14 19H14.01M14.5 19C14.5 19.2761 14.2761 19.5 14 19.5C13.7239 19.5 13.5 19.2761 13.5 19C13.5 18.7239 13.7239 18.5 14 18.5C14.2761 18.5 14.5 18.7239 14.5 19Z" stroke="currentColor" strokeWidth="2"/>
                     <path d="M14 15L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -298,9 +319,9 @@ const Product = () => {
                   <span className="font-medium text-sm">Materials:</span> {product.materials.join(', ')}
                 </div>
               </div>
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
                     <circle cx="12" cy="12" r="10"/>
                     <circle cx="12" cy="12" r="4"/>
                     <line x1="21.17" x2="12" y1="8" y2="8"/>
@@ -312,9 +333,9 @@ const Product = () => {
                   <span className="font-medium text-sm">Size:</span> {product.diameter}
                 </div>
               </div>
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
                     <path d="m16 6 4 14"/>
                     <path d="M12 6v14"/>
                     <path d="M8 8v12"/>
@@ -335,17 +356,17 @@ const Product = () => {
               transition={{ delay: 0.3 }}
             >
               <h3 className="text-sm font-medium mb-3">Color: <span className="text-brand-green">{selectedColor}</span></h3>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 {product.colors.map(color => (
                   <motion.button
                     key={color}
                     onClick={() => setSelectedColor(color)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${selectedColor === color ? 'ring-2 ring-offset-2 ring-brand-green' : ''}`}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center ${selectedColor === color ? 'ring-2 ring-offset-2 ring-brand-green' : ''}`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <span
-                      className="w-8 h-8 rounded-full"
+                      className="w-10 h-10 rounded-full"
                       style={{ 
                         backgroundColor: color === 'Blue' ? '#3b5998' : 
                                       color === 'Green' ? '#4d7a6a' : 
@@ -407,7 +428,7 @@ const Product = () => {
                   initial={{ opacity: 1 }}
                   animate={{ opacity: addedToCart ? 0 : 1 }}
                 >
-                  Add to bag — {product.price} AED
+                  Add to bag — {product.price * quantity} AED
                 </motion.div>
                 
                 <motion.div 
@@ -424,12 +445,13 @@ const Product = () => {
               
               <div className="flex gap-4">
                 <motion.button 
-                  className="flex-1 h-11 border border-gray-300 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors rounded-sm"
+                  className={`flex-1 h-11 border ${isWishlisted ? 'bg-pink-50 border-pink-200' : 'border-gray-300'} flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors rounded-sm`}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
+                  onClick={handleToggleWishlist}
                 >
-                  <Heart size={16} />
-                  <span>Add to wish list</span>
+                  <Heart size={16} className={isWishlisted ? 'fill-pink-500 text-pink-500' : ''} />
+                  <span>{isWishlisted ? 'Added to wishlist' : 'Add to wishlist'}</span>
                 </motion.button>
                 <motion.button 
                   className="flex-1 h-11 border border-gray-300 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors rounded-sm"

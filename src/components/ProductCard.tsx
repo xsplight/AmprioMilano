@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from './Cart';
+import { ShoppingBag } from 'lucide-react';
 
 interface ProductCardProps {
   id: number;
@@ -36,8 +38,22 @@ const ProductCard = ({
   category
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { addToCart } = useCart();
   
   const defaultImage = "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234";
+  
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    addToCart({
+      id,
+      name,
+      price: isSale && salePrice ? salePrice : price,
+      image: image || defaultImage,
+      quantity: 1
+    });
+  };
   
   // HoReCa category icon
   const renderCategoryIcon = () => {
@@ -105,13 +121,13 @@ const ProductCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Product image */}
+      {/* Product image - removed border and overflow elements */}
       <Link to={`/product/${id}`} className="block relative">
-        <div className="aspect-square w-full overflow-hidden">
+        <div className="aspect-square w-full">
           <img
             src={isHovered && hoverImage ? hoverImage : (image || defaultImage)}
             alt={name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
           />
         </div>
         
@@ -128,6 +144,15 @@ const ProductCard = ({
             </span>
           )}
         </div>
+        
+        {/* Quick add to cart button */}
+        <button 
+          onClick={handleAddToCart}
+          className="absolute bottom-2 right-2 bg-brand-green text-white p-2 rounded-full opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+          aria-label="Add to cart"
+        >
+          <ShoppingBag size={16} />
+        </button>
         
         {/* Category icon for HoReCa products */}
         {renderCategoryIcon()}

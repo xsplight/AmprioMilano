@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingBag, Search, User, Phone, Truck } from 'lucide-react';
+import { Menu, X, Search, User, Phone, Truck } from 'lucide-react';
 import Footer from './Footer';
 import Cart from './Cart';
+import CartIcon from './CartIcon';
+import SmallLogo from './SmallLogo';
 import { useToast } from "@/hooks/use-toast";
 import {
   NavigationMenu,
@@ -41,8 +43,8 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <>
-      {/* Announcement Bar - Increased height */}
-      <div className="bg-brand-green text-white py-3 px-4 text-sm">
+      {/* Announcement Bar - Height set to 56px */}
+      <div className="bg-brand-green text-white py-4 px-4 text-sm h-14">
         <div className="container-custom flex justify-between items-center">
           <div className="flex items-center">
             <Truck size={18} className="mr-2" />
@@ -57,18 +59,22 @@ const Layout = ({ children }: LayoutProps) => {
 
       <header
         className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white'
+          isScrolled ? 'bg-white shadow-sm py-2' : 'bg-white py-6'
         }`}
       >
-        <div className="container-custom flex flex-col items-center py-6">
-          {/* Logo - Increased size */}
-          <Link to="/" className="mb-6">
-            <img 
-              src="https://cdn.shopify.com/s/files/1/0592/5152/3702/files/AMP_LOGO_FULL.svg?v=1735227680" 
-              alt="Amprio Milano" 
-              className="h-28" // Increased from h-24 to h-28
-            />
-          </Link>
+        <div className="container-custom flex flex-col items-center">
+          {/* Logo - Only show when not scrolled */}
+          {!isScrolled ? (
+            <Link to="/" className="mb-6">
+              <img 
+                src="https://cdn.shopify.com/s/files/1/0592/5152/3702/files/AMP_LOGO_FULL.svg?v=1735227680" 
+                alt="Amprio Milano" 
+                className="h-28" 
+              />
+            </Link>
+          ) : (
+            <div className="py-2"></div>
+          )}
 
           <div className="w-full flex items-center justify-between">
             {/* Mobile menu button */}
@@ -79,6 +85,13 @@ const Layout = ({ children }: LayoutProps) => {
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
+
+            {/* Small logo when scrolled */}
+            {isScrolled && (
+              <div className="md:flex items-center hidden">
+                <SmallLogo />
+              </div>
+            )}
 
             {/* Desktop navigation with NavigationMenu */}
             <div className="hidden md:block flex-grow">
@@ -451,14 +464,7 @@ const Layout = ({ children }: LayoutProps) => {
               <Link to="/account" aria-label="Account" className="hover:text-brand-green transition-colors">
                 <User size={22} />
               </Link>
-              <button 
-                aria-label="Cart" 
-                className="flex items-center group hover:text-brand-green transition-colors"
-                onClick={() => setIsCartOpen(true)}
-              >
-                <ShoppingBag size={22} className="group-hover:animate-cart-bounce" />
-                <span className="ml-1 text-base">— 0</span>
-              </button>
+              <CartIcon onClick={() => setIsCartOpen(true)} />
             </div>
           </div>
         </div>
