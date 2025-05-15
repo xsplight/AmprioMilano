@@ -2,13 +2,21 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { Heart, Share2, TruckIcon, RefreshCcw, Minus, Plus, ArrowLeft, Check } from 'lucide-react';
 import ProductLineSection from '../components/ProductLineSection';
 import RelatedProducts from '../components/RelatedProducts';
-import { motion } from 'framer-motion';
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from '../components/Cart';
 import Cart from '../components/Cart';
+import ProductImageGallery from '../components/product/ProductImageGallery';
+import ProductInfo from '../components/product/ProductInfo';
+import ProductAttributes from '../components/product/ProductAttributes';
+import ProductColorSelector from '../components/product/ProductColorSelector';
+import ProductQuantitySelector from '../components/product/ProductQuantitySelector';
+import ProductActions from '../components/product/ProductActions';
+import ProductServices from '../components/product/ProductServices';
+import ProductTabs from '../components/product/ProductTabs';
+import ProductBreadcrumb from '../components/product/ProductBreadcrumb';
+import BackButton from '../components/product/BackButton';
 
 // Mock product data (в будущем будет заменено на API)
 const product = {
@@ -126,31 +134,12 @@ const recentlyViewed = [
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
-  const [mainImage, setMainImage] = useState(product.images[0]);
   const [selectedColor, setSelectedColor] = useState('Blue');
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState('description');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
   const { addToCart } = useCart();
-  
-  // Animation variants
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-  };
-
-  const handleIncrement = () => {
-    setQuantity(prev => prev + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(prev => prev - 1);
-    }
-  };
   
   const handleAddToCart = () => {
     // Add item to cart with current quantity
@@ -183,366 +172,75 @@ const Product = () => {
     }, 800);
   };
 
-  const handleToggleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
-    toast({
-      title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
-      description: isWishlisted ? `${product.name} removed from your wishlist` : `${product.name} added to your wishlist`,
-      duration: 3000,
-    });
-  };
-
   return (
     <Layout>
       {/* Cart component */}
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       
       {/* Breadcrumb */}
-      <div className="bg-[#f8f8f8] py-3 border-b border-gray-200">
-        <div className="container-custom">
-          <div className="flex items-center text-sm">
-            <Link to="/" className="text-gray-500 hover:text-brand-green transition-colors">Home</Link>
-            <span className="mx-2 text-gray-400">/</span>
-            <span className="text-gray-800">{product.name}</span>
-          </div>
-        </div>
-      </div>
+      <ProductBreadcrumb productName={product.name} />
       
       <div className="container-custom py-8">
         {/* Back button */}
-        <motion.div 
-          className="mb-6"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <Link to="/" className="inline-flex items-center text-sm text-gray-600 hover:text-brand-green transition-colors">
-            <ArrowLeft size={16} className="mr-1" />
-            Back
-          </Link>
-        </motion.div>
+        <BackButton />
         
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* Product Images - Changed layout to vertical with images below */}
-          <motion.div 
-            className="lg:w-3/5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex flex-col gap-4">
-              {/* Main Image - removed border and overflow */}
-              <div className="w-full">
-                <motion.div 
-                  className="aspect-square md:aspect-[4/5] w-full"
-                  layoutId={`product-image-${id}`}
-                >
-                  <img 
-                    src={mainImage} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain"
-                  />
-                </motion.div>
-              </div>
-              
-              {/* Thumbnails below main image */}
-              <div className="w-full flex gap-2 justify-center">
-                {product.images.map((img, index) => (
-                  <motion.button 
-                    key={index}
-                    onClick={() => setMainImage(img)}
-                    className={`aspect-square w-24 ${mainImage === img ? 'ring-2 ring-brand-green' : 'hover:opacity-80'}`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <img 
-                      src={img} 
-                      alt={`${product.name} - view ${index + 1}`} 
-                      className="w-full h-full object-contain"
-                    />
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          {/* Product Images */}
+          <ProductImageGallery 
+            images={product.images} 
+            productName={product.name}
+            id={id}
+          />
           
           {/* Product Details */}
           <div className="lg:w-2/5">
-            <motion.div {...fadeIn}>
-              <div className="mb-4 flex justify-between items-start">
-                <div>
-                  <h1 className="text-2xl font-serif mb-1">{product.name}</h1>
-                  <p className="text-sm text-gray-600 mb-3">Baci Milano</p>
-                  <p className="text-sm text-gray-500 mb-2">Item no. {product.itemNo}</p>
-                  <p className="text-sm text-gray-500 mb-2">Ø {product.diameter}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xl font-medium">{product.price} AED</p>
-                </div>
-              </div>
-            </motion.div>
+            {/* Basic product info */}
+            <ProductInfo 
+              name={product.name}
+              itemNo={product.itemNo}
+              diameter={product.diameter}
+              price={product.price}
+              inStock={product.inStock}
+              deliveryTime={product.deliveryTime}
+            />
             
-            {/* Availability and delivery info */}
-            <motion.div 
-              className="mb-6 pt-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="flex items-center mb-2 text-sm">
-                <span className="text-brand-green mr-2">✓</span>
-                <span>{product.inStock} in stock, delivery time approx. {product.deliveryTime}</span>
-              </div>
-              <div className="text-sm text-gray-500">
-                Otherwise approx. 2 months delivery time
-              </div>
-            </motion.div>
-            
-            {/* Material and Size - Improved icons */}
-            <motion.div 
-              className="mb-6 border-t border-gray-200 pt-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
-                    <path d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M14 19H14.01M14.5 19C14.5 19.2761 14.2761 19.5 14 19.5C13.7239 19.5 13.5 19.2761 13.5 19C13.5 18.7239 13.7239 18.5 14 18.5C14.2761 18.5 14.5 18.7239 14.5 19Z" stroke="currentColor" strokeWidth="2"/>
-                    <path d="M14 15L15.5 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M14 15L13.5 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M14 15L16.5 15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-medium text-sm">Materials:</span> {product.materials.join(', ')}
-                </div>
-              </div>
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
-                    <circle cx="12" cy="12" r="10"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <line x1="21.17" x2="12" y1="8" y2="8"/>
-                    <line x1="3.95" x2="8.54" y1="6.06" y2="14"/>
-                    <line x1="10.88" x2="15.46" y1="21.94" y2="14"/>
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-medium text-sm">Size:</span> {product.diameter}
-                </div>
-              </div>
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-brand-green/10 rounded-full mr-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-green">
-                    <path d="m16 6 4 14"/>
-                    <path d="M12 6v14"/>
-                    <path d="M8 8v12"/>
-                    <path d="M4 4v16"/>
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-medium text-sm">SKU:</span> {product.sku}
-                </div>
-              </div>
-            </motion.div>
+            {/* Material and Size Icons */}
+            <ProductAttributes 
+              materials={product.materials}
+              diameter={product.diameter}
+              sku={product.sku}
+            />
             
             {/* Color Selection */}
-            <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <h3 className="text-sm font-medium mb-3">Color: <span className="text-brand-green">{selectedColor}</span></h3>
-              <div className="flex gap-3">
-                {product.colors.map(color => (
-                  <motion.button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center ${selectedColor === color ? 'ring-2 ring-offset-2 ring-brand-green' : ''}`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span
-                      className="w-10 h-10 rounded-full"
-                      style={{ 
-                        backgroundColor: color === 'Blue' ? '#3b5998' : 
-                                      color === 'Green' ? '#4d7a6a' : 
-                                      color === 'Gold' ? '#D4AF37' : 
-                                      color === 'White' ? '#FFFFFF' : ''
-                      }}
-                      aria-label={`Select ${color} color`}
-                    ></span>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
+            <ProductColorSelector 
+              colors={product.colors} 
+              onColorChange={setSelectedColor}
+              initialColor={selectedColor}
+            />
             
             {/* Quantity Selector */}
-            <motion.div 
-              className="mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <h3 className="text-sm font-medium mb-3">Quantity</h3>
-              <div className="flex">
-                <motion.button 
-                  onClick={handleDecrement}
-                  className="border border-r-0 border-gray-300 w-12 h-12 flex items-center justify-center hover:bg-gray-50 rounded-l-sm"
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Minus size={18} />
-                </motion.button>
-                <div className="border-y border-gray-300 h-12 w-16 flex items-center justify-center font-medium">
-                  {quantity}
-                </div>
-                <motion.button 
-                  onClick={handleIncrement}
-                  className="border border-l-0 border-gray-300 w-12 h-12 flex items-center justify-center hover:bg-gray-50 rounded-r-sm"
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Plus size={18} />
-                </motion.button>
-              </div>
-            </motion.div>
+            <ProductQuantitySelector 
+              initialQuantity={quantity} 
+              onQuantityChange={setQuantity}
+            />
             
             {/* Add to Cart & Wishlist */}
-            <motion.div 
-              className="flex flex-col gap-4 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <motion.button 
-                className="relative w-full h-12 bg-brand-green text-white uppercase text-sm tracking-wider hover:bg-brand-lightGreen transition-colors rounded-sm overflow-hidden"
-                onClick={handleAddToCart}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={addedToCart}
-              >
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: addedToCart ? 0 : 1 }}
-                >
-                  Add to bag — {product.price * quantity} AED
-                </motion.div>
-                
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ 
-                    opacity: addedToCart ? 1 : 0,
-                    y: addedToCart ? 0 : 20
-                  }}
-                >
-                  <Check className="mr-2" size={18} /> Added to bag
-                </motion.div>
-              </motion.button>
-              
-              <div className="flex gap-4">
-                <motion.button 
-                  className={`flex-1 h-11 border ${isWishlisted ? 'bg-pink-50 border-pink-200' : 'border-gray-300'} flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors rounded-sm`}
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleToggleWishlist}
-                >
-                  <Heart size={16} className={isWishlisted ? 'fill-pink-500 text-pink-500' : ''} />
-                  <span>{isWishlisted ? 'Added to wishlist' : 'Add to wishlist'}</span>
-                </motion.button>
-                <motion.button 
-                  className="flex-1 h-11 border border-gray-300 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition-colors rounded-sm"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Share2 size={16} />
-                  <span>Share</span>
-                </motion.button>
-              </div>
-            </motion.div>
-            
-            {/* Sharing options */}
-            <motion.div 
-              className="flex gap-4 mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              <button className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                WhatsApp
-              </button>
-              <button className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                Email
-              </button>
-            </motion.div>
+            <ProductActions 
+              onAddToCart={handleAddToCart}
+              price={product.price}
+              quantity={quantity}
+              productName={product.name}
+              isAddingToCart={addedToCart}
+            />
             
             {/* Services */}
-            <motion.div 
-              className="space-y-3 border-t border-b border-gray-200 py-6 mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              <div className="flex items-center">
-                <TruckIcon size={18} className="mr-3 text-brand-green" />
-                <span className="text-sm">Fast shipping in UAE</span>
-              </div>
-              <div className="flex items-center">
-                <RefreshCcw size={18} className="mr-3 text-brand-green" />
-                <span className="text-sm">Free returns within 30 days</span>
-              </div>
-            </motion.div>
+            <ProductServices />
             
             {/* Product Info Tabs */}
-            <motion.div 
-              className="border-b border-gray-200 mb-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <div className="flex">
-                <button
-                  onClick={() => setActiveTab('description')}
-                  className={`py-3 px-4 text-sm transition-colors ${
-                    activeTab === 'description' ? 'border-b-2 border-brand-green font-medium' : 'text-gray-500'
-                  }`}
-                >
-                  Description
-                </button>
-                <button
-                  onClick={() => setActiveTab('details')}
-                  className={`py-3 px-4 text-sm transition-colors ${
-                    activeTab === 'details' ? 'border-b-2 border-brand-green font-medium' : 'text-gray-500'
-                  }`}
-                >
-                  Details
-                </button>
-              </div>
-            </motion.div>
-            
-            {/* Tab Content */}
-            <motion.div 
-              className="text-sm leading-relaxed text-gray-700"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-              key={activeTab}
-            >
-              {activeTab === 'description' && (
-                <p>{product.description}</p>
-              )}
-              
-              {activeTab === 'details' && (
-                <ul className="list-disc list-inside space-y-2">
-                  {product.details.map((detail, index) => (
-                    <li key={index}>{detail}</li>
-                  ))}
-                </ul>
-              )}
-            </motion.div>
+            <ProductTabs 
+              description={product.description}
+              details={product.details}
+            />
           </div>
         </div>
         
