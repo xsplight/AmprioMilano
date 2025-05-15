@@ -2,6 +2,7 @@
 import Layout from '../components/Layout';
 import Hero from '../components/Hero';
 import ProductGrid from '../components/ProductGrid';
+import ProductCard from '../components/ProductCard';
 import CollectionCarousel from '../components/CollectionCarousel';
 import TableSettingVisualizer from '../components/TableSettingVisualizer';
 import { Link } from 'react-router-dom';
