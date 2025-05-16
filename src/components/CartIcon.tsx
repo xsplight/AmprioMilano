@@ -1,18 +1,19 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from './Cart';
+import Cart from './Cart';
 
 const CartIcon = () => {
   const { itemCount } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
     <div className="relative">
-      <Link 
-        to="/checkout" 
+      <button 
         className="p-2 text-gray-800 hover:text-brand-green transition-colors"
         aria-label="View cart"
+        onClick={() => setIsCartOpen(true)}
       >
         <ShoppingBag size={24} />
         {itemCount > 0 && (
@@ -20,7 +21,9 @@ const CartIcon = () => {
             {itemCount}
           </span>
         )}
-      </Link>
+      </button>
+      
+      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 };

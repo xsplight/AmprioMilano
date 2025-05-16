@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from './Cart';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, ImageOff } from 'lucide-react';
+import ProductImagePlaceholder from './product/ProductImagePlaceholder';
 
 interface ProductCardProps {
   id: number;
@@ -19,6 +20,7 @@ interface ProductCardProps {
   deliveryTime?: string;
   currency?: string;
   category?: string;
+  description?: string;
 }
 
 const ProductCard = ({
@@ -35,12 +37,12 @@ const ProductCard = ({
   inStock,
   deliveryTime,
   currency = "AED",
-  category
+  category,
+  description
 }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
-  
-  const defaultImage = "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234";
+  const [quantity, setQuantity] = useState(1);
   
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -50,9 +52,23 @@ const ProductCard = ({
       id,
       name,
       price: isSale && salePrice ? salePrice : price,
-      image: image || defaultImage,
-      quantity: 1
+      image: image || '',
+      quantity: quantity
     });
+  };
+
+  const increaseQuantity = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuantity(prev => prev + 1);
+  };
+
+  const decreaseQuantity = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+    }
   };
   
   // HoReCa category icon
@@ -124,11 +140,15 @@ const ProductCard = ({
       {/* Product image - removed border and overflow elements */}
       <Link to={`/product/${id}`} className="block relative">
         <div className="aspect-square w-full">
-          <img
-            src={isHovered && hoverImage ? hoverImage : (image || defaultImage)}
-            alt={name}
-            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-          />
+          {image ? (
+            <img
+              src={isHovered && hoverImage ? hoverImage : image}
+              alt={name}
+              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <ProductImagePlaceholder className="w-full h-full" />
+          )}
         </div>
         
         {/* Product badges */}
@@ -145,14 +165,36 @@ const ProductCard = ({
           )}
         </div>
         
-        {/* Quick add to cart button */}
-        <button 
-          onClick={handleAddToCart}
-          className="absolute bottom-2 right-2 bg-brand-green text-white p-2 rounded-full opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-          aria-label="Add to cart"
-        >
-          <ShoppingBag size={16} />
-        </button>
+        {/* Quick add to cart with quantity selector */}
+        <div className="absolute bottom-2 right-2 flex flex-col gap-2 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          <div className="bg-white shadow-md rounded-md flex items-center overflow-hidden">
+            <button 
+              onClick={decreaseQuantity}
+              className="p-1 hover:bg-gray-100"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+            <span className="px-2">{quantity}</span>
+            <button 
+              onClick={increaseQuantity}
+              className="p-1 hover:bg-gray-100"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+              </svg>
+            </button>
+          </div>
+          <button 
+            onClick={handleAddToCart}
+            className="bg-brand-green text-white p-2 rounded-full"
+            aria-label="Add to cart"
+          >
+            <ShoppingBag size={16} />
+          </button>
+        </div>
         
         {/* Category icon for HoReCa products */}
         {renderCategoryIcon()}
@@ -163,6 +205,9 @@ const ProductCard = ({
         <Link to={`/product/${id}`} className="block">
           <h3 className="text-sm font-medium hover:text-brand-green transition-colors">{name}</h3>
         </Link>
+        {description && (
+          <p className="text-xs text-gray-600 mt-1 line-clamp-2">{description}</p>
+        )}
         {itemNo && (
           <p className="text-xs text-gray-500 mt-1">Item no. {itemNo}</p>
         )}

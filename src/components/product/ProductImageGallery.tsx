@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import ProductImagePlaceholder from './ProductImagePlaceholder';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -22,32 +23,40 @@ const ProductImageGallery = ({ images, productName, id }: ProductImageGalleryPro
         {/* Main Image */}
         <div className="w-full">
           <motion.div 
-            className="aspect-square md:aspect-[4/5] w-full"
+            className="aspect-square w-full"
             layoutId={`product-image-${id}`}
           >
-            <img 
-              src={mainImage} 
-              alt={productName} 
-              className="w-full h-full object-contain"
-            />
+            {mainImage ? (
+              <img 
+                src={mainImage} 
+                alt={productName} 
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <ProductImagePlaceholder className="w-full h-full" />
+            )}
           </motion.div>
         </div>
         
         {/* Thumbnails below main image */}
-        <div className="w-full flex gap-2 justify-center">
+        <div className="w-full flex gap-2 justify-center flex-wrap">
           {images.map((img, index) => (
             <motion.button 
               key={index}
               onClick={() => setMainImage(img)}
-              className={`aspect-square w-24 ${mainImage === img ? 'ring-2 ring-brand-green' : 'hover:opacity-80'}`}
+              className={`aspect-square w-20 ${mainImage === img ? 'ring-2 ring-brand-green' : 'hover:opacity-80'}`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <img 
-                src={img} 
-                alt={`${productName} - view ${index + 1}`} 
-                className="w-full h-full object-contain"
-              />
+              {img ? (
+                <img 
+                  src={img} 
+                  alt={`${productName} - view ${index + 1}`} 
+                  className="w-full h-full object-contain"
+                />
+              ) : (
+                <ProductImagePlaceholder className="w-full h-full" />
+              )}
             </motion.button>
           ))}
         </div>

@@ -17,6 +17,7 @@ interface Product {
   diameter?: string;
   inStock?: number;
   deliveryTime?: string;
+  description?: string;
 }
 
 interface ProductGridProps {
@@ -34,18 +35,6 @@ const ProductGrid = ({
   columns = 4,
   layout = 'grid'
 }: ProductGridProps) => {
-  const { addToCart } = useCart();
-
-  const handleAddToCart = (product: Product) => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.isSale && product.salePrice ? product.salePrice : product.price,
-      image: product.image || '',
-      quantity: 1
-    });
-  };
-
   const getGridClass = () => {
     switch (columns) {
       case 2:
@@ -104,15 +93,6 @@ const ProductGrid = ({
                       <span className="font-medium">{product.price} AED</span>
                     )}
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <button 
-                      className="fashion-btn"
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      Add to Cart
-                    </button>
-                    <Link to={`/product/${product.id}`} className="fashion-btn-outline">View Details</Link>
-                  </div>
                 </div>
               </div>
             ))}
@@ -140,7 +120,6 @@ const ProductGrid = ({
               key={product.id} 
               {...product} 
               image={product.image || ''} 
-              handleAddToCart={() => handleAddToCart(product)} 
             />
           ))}
         </div>

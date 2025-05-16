@@ -12,6 +12,7 @@ interface Product {
   salePrice?: number;
   itemNo?: string;
   diameter?: string;
+  description?: string;
 }
 
 interface RelatedProductsProps {

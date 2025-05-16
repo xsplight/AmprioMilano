@@ -59,6 +59,7 @@ const sameLine = [
     diameter: "31.5 cm",
     inStock: 8,
     deliveryTime: "4-5 working days",
+    description: "Elegant white presentation plate perfect for fine dining establishments and home use. Features a subtle rim design.",
     currency: "AED"
   },
   {
@@ -70,6 +71,7 @@ const sameLine = [
     diameter: "29.5 cm",
     inStock: 32,
     deliveryTime: "4-5 working days",
+    description: "Unique dinner plate with special center depression perfect for sauces. Japanese-inspired Shogun design.",
     currency: "AED"
   },
   {
@@ -81,6 +83,7 @@ const sameLine = [
     diameter: "29.5 cm",
     inStock: 27,
     deliveryTime: "4-5 working days",
+    description: "Oversized dinner plate with broad rim for elegant food presentation. Perfect for main courses.",
     currency: "AED"
   }
 ];
@@ -91,14 +94,16 @@ const relatedProducts = [
     id: 5,
     name: "Crystal Water Glass - Sapphire",
     price: 75,
-    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500"
+    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500",
+    description: "Exquisite crystal water glass with subtle blue tint. Perfect for elegant table settings."
   },
   {
     id: 6,
     name: "Porcelain Teacup - Azure",
     price: 65,
     image: "https://ampriomilano.com/cdn/shop/files/SER1.MAM01_38535f72-c5c9-4f51-a7b1-a606c5fa947f_400x.png?v=1737391443",
-    isNew: true
+    isNew: true,
+    description: "New addition to our collection. Fine porcelain teacup with delicate azure pattern."
   },
   {
     id: 7,
@@ -106,7 +111,8 @@ const relatedProducts = [
     price: 89,
     image: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
     isSale: true,
-    salePrice: 69
+    salePrice: 69,
+    description: "Luxury wine glass with 24k gold-plated rim. Currently on sale for a limited time."
   }
 ];
 
@@ -116,19 +122,22 @@ const recentlyViewed = [
     id: 8,
     name: "Fine Silver Dessert Spoon",
     price: 45,
-    image: "https://ampriomilano.com/cdn/shop/files/SER1.MAM01_38535f72-c5c9-4f51-a7b1-a606c5fa947f_400x.png?v=1737391443"
+    image: "https://ampriomilano.com/cdn/shop/files/SER1.MAM01_38535f72-c5c9-4f51-a7b1-a606c5fa947f_400x.png?v=1737391443",
+    description: "Sterling silver dessert spoon with classical design. Perfect for fine dining."
   },
   {
     id: 9,
     name: "Gold Plated Serving Fork",
     price: 55,
-    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500"
+    image: "https://ampriomilano.com/cdn/shop/files/CTRA.MAM01_0c773653-45c2-4647-a1b0-f4206c2d2134_400x.png?v=1737391500",
+    description: "Elegant gold-plated serving fork for special occasions and dinner parties."
   },
   {
     id: 10,
     name: "Premium Ceramic Serving Bowl",
     price: 120,
-    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880"
+    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
+    description: "Large ceramic serving bowl with hand-painted design. Perfect centerpiece for any table."
   }
 ];
 
@@ -180,11 +189,11 @@ const Product = () => {
       {/* Breadcrumb */}
       <ProductBreadcrumb productName={product.name} />
       
-      <div className="container-custom py-8">
+      <div className="container-custom pt-4 pb-8">
         {/* Back button */}
         <BackButton />
         
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-12 mt-2">
           {/* Product Images */}
           <ProductImageGallery 
             images={product.images} 
