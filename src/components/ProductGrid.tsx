@@ -136,7 +136,12 @@ const ProductGrid = ({
         {/* Product grid */}
         <div className={`grid ${getGridClass()} gap-x-6 gap-y-10`}>
           {products.map((product) => (
-            <ProductCard key={product.id} {...product} onAddToCart={() => handleAddToCart(product)} />
+            <ProductCard 
+              key={product.id} 
+              {...product} 
+              image={product.image || ''} 
+              handleAddToCart={() => handleAddToCart(product)} 
+            />
           ))}
         </div>
       </div>
