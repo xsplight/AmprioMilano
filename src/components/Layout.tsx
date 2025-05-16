@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, User, Phone, Truck } from 'lucide-react';
@@ -84,9 +85,9 @@ const Layout = ({ children }: LayoutProps) => {
             </button>
 
             {/* Desktop navigation with NavigationMenu */}
-            <div className="hidden md:block flex-grow">
-              <NavigationMenu className="justify-center">
-                <NavigationMenuList>
+            <div className="hidden md:block w-full">
+              <NavigationMenu className="mx-auto">
+                <NavigationMenuList className="justify-center">
                   <NavigationMenuItem>
                     <Link 
                       to="/" 
@@ -433,13 +434,6 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       <Footer />
-
-      {/* Shopping Cart Slide-out */}
-      <div className={`fixed inset-0 bg-black/30 z-40 transition-opacity ${isCartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setIsCartOpen(false)}
-      ></div>
-      
-      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       
       {/* Chatbot button */}
       <button 
