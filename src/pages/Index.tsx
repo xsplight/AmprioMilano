@@ -22,23 +22,23 @@ const featuredProducts = [
     id: 2,
     name: "Coffee Cup with Saucer - Milano",
     price: 85,
-    image: "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780",
-    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLAR.MICA04_3efcc2df-8b59-40e7-aa67-0bc005720fb8_400x.png?v=1746463780"
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
   },
   {
     id: 3,
     name: "Dessert Bowl - Ortigia Collection",
     price: 95,
-    image: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
-    hoverImage: "https://ampriomilano.com/cdn/shop/files/BOL1.MAM03_34bf36bb-3199-4c0b-bdc2-8ca64dbf3a12_400x.png?v=1746406880",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     isNew: true
   },
   {
     id: 4,
     name: "Wine Glass Set - Crystal Collection",
     price: 110,
-    image: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
-    hoverImage: "https://ampriomilano.com/cdn/shop/files/TS_MAM04_45100a99-1976-42f5-8721-ff4357d9d967_400x.png?v=1746406478",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
+    hoverImage: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     isSale: true,
     salePrice: 90
   }
@@ -49,28 +49,28 @@ const collections = [
   {
     id: 1,
     name: "Ortigia Collection",
-    image: "https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     link: "/collection/ortigia",
     description: "The new and elegant Ortigia Collection creates a perfect balance between style and functionality."
   },
   {
     id: 2,
     name: "Versailles Collection",
-    image: "https://ampriomilano.com/cdn/shop/files/AMAZZONIA_600x.jpg?v=1733497346",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     link: "/collection/versailles",
     description: "Timeless elegance inspired by the grandeur of French palaces, perfect for formal dining experiences."
   },
   {
     id: 3,
     name: "Milano Collection",
-    image: "https://ampriomilano.com/cdn/shop/files/CPS2_970cf00b-8562-465b-a52c-99d6ef3c11b3_800x.jpg?v=1737945188",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     link: "/collection/milano",
     description: "Modern sophistication with an Italian flair, designed for contemporary dining spaces."
   },
   {
     id: 4,
     name: "Coastal Collection",
-    image: "https://ampriomilano.com/cdn/shop/files/SET_TABLE_4_800x.jpg?v=1708334587",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234",
     link: "/collection/coastal",
     description: "Inspired by the Mediterranean coastline, featuring fresh blues and sandy neutrals."
   }
@@ -179,7 +179,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div variants={fadeInUp}>
               <img 
-                src="https://ampriomilano.com/cdn/shop/files/SET_TABLE_3_800x.jpg?v=1708334587" 
+                src="https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234" 
                 alt="Amprio Milano craftsmanship" 
                 className="w-full h-auto rounded-lg shadow-lg" 
               />
