@@ -30,7 +30,7 @@ const ProductImageGallery = ({ images, productName, id }: ProductImageGalleryPro
               <img 
                 src={mainImage} 
                 alt={productName} 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain bg-gray-50"
               />
             ) : (
               <ProductImagePlaceholder className="w-full h-full" />
@@ -52,10 +52,10 @@ const ProductImageGallery = ({ images, productName, id }: ProductImageGalleryPro
                 <img 
                   src={img} 
                   alt={`${productName} - view ${index + 1}`} 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain bg-gray-50"
                 />
               ) : (
-                <ProductImagePlaceholder className="w-full h-full" />
+                <ProductImagePlaceholder className="w-full h-full" text="No image" />
               )}
             </motion.button>
           ))}

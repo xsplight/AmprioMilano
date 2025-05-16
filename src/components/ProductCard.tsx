@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from './Cart';
-import { ShoppingBag, ImageOff } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import ProductImagePlaceholder from './product/ProductImagePlaceholder';
 
 interface ProductCardProps {
@@ -137,9 +137,9 @@ const ProductCard = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Product image - removed border and overflow elements */}
+      {/* Product image - squared aspect ratio */}
       <Link to={`/product/${id}`} className="block relative">
-        <div className="aspect-square w-full">
+        <div className="aspect-square w-full bg-gray-50">
           {image ? (
             <img
               src={isHovered && hoverImage ? hoverImage : image}
