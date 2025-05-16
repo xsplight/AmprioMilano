@@ -1,19 +1,16 @@
 
+import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from './Cart';
 
-interface CartIconProps {
-  onClick: () => void;
-}
-
-const CartIcon = ({ onClick }: CartIconProps) => {
+const CartIcon = () => {
   const { itemCount } = useCart();
 
   return (
-    <button 
-      onClick={onClick}
+    <Link 
+      to="/checkout" 
       className="relative p-2 text-gray-800 hover:text-brand-green transition-colors"
-      aria-label="Open cart"
+      aria-label="View cart"
     >
       <ShoppingBag size={24} />
       {itemCount > 0 && (
@@ -21,7 +18,7 @@ const CartIcon = ({ onClick }: CartIconProps) => {
           {itemCount}
         </span>
       )}
-    </button>
+    </Link>
   );
 };
 

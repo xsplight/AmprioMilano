@@ -1,9 +1,16 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const BackButton = () => {
+  const navigate = useNavigate();
+  
+  const handleGoBack = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(-1); // Go back to previous page in history
+  };
+
   return (
     <motion.div 
       className="mb-6"
@@ -11,10 +18,14 @@ const BackButton = () => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.2 }}
     >
-      <Link to="/" className="inline-flex items-center text-sm text-gray-600 hover:text-brand-green transition-colors">
+      <a 
+        href="#" 
+        onClick={handleGoBack}
+        className="inline-flex items-center text-sm text-gray-600 hover:text-brand-green transition-colors"
+      >
         <ArrowLeft size={16} className="mr-1" />
         Back
-      </Link>
+      </a>
     </motion.div>
   );
 };

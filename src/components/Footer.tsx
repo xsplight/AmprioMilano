@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -59,21 +59,32 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info Column (replacing Newsletter) */}
+          {/* Contact Info Column */}
           <div>
             <h3 className="font-medium uppercase tracking-wider mb-6 text-base">Contact Us</h3>
-            <ul className="space-y-3 text-sm text-white/90">
-              <li>T: <a href="tel:+97152177347" className="hover:text-gold-DEFAULT transition-colors">+971 52 177 3471</a></li>
-              <li>E: <a href="mailto:info@amprio.ae" className="hover:text-gold-DEFAULT transition-colors">info@amprio.ae</a></li>
-              <li className="pt-1">@ampriomilano</li>
-              <li className="pt-2">Office:</li>
-              <li>1802 Ontario Tower, Business Bay, Dubai UAE</li>
+            <ul className="space-y-4 text-sm text-white/90">
+              <li className="flex items-start">
+                <Phone size={18} className="mr-2 flex-shrink-0 mt-1" />
+                <span>
+                  <strong className="block mb-1">Phone</strong>
+                  <a href="tel:+97152177347" className="hover:text-gold-DEFAULT transition-colors">+971 52 177 3471</a>
+                </span>
+              </li>
+              <li className="flex items-start">
+                <Mail size={18} className="mr-2 flex-shrink-0 mt-1" />
+                <span>
+                  <strong className="block mb-1">Email</strong>
+                  <a href="mailto:info@amprio.ae" className="hover:text-gold-DEFAULT transition-colors">info@amprio.ae</a>
+                </span>
+              </li>
+              <li className="flex items-start">
+                <MapPin size={18} className="mr-2 flex-shrink-0 mt-1" />
+                <span>
+                  <strong className="block mb-1">Office</strong>
+                  1802 Ontario Tower, Business Bay<br/>Dubai UAE
+                </span>
+              </li>
             </ul>
-            <div className="flex mt-6 space-x-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold-DEFAULT transition-colors">
-                <img src="/lovable-uploads/e27b5ed6-867b-45e1-b186-7600041beb58.png" alt="Social icons" className="h-8" />
-              </a>
-            </div>
           </div>
         </div>
 

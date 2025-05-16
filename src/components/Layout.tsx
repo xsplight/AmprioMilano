@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, User, Phone, Truck } from 'lucide-react';
@@ -63,8 +62,8 @@ const Layout = ({ children }: LayoutProps) => {
         }`}
       >
         <div className="container-custom flex flex-col items-center">
-          {/* Logo - Only show when not scrolled */}
-          {!isScrolled ? (
+          {/* Hide logo completely when scrolled */}
+          {!isScrolled && (
             <Link to="/" className="mb-6">
               <img 
                 src="https://cdn.shopify.com/s/files/1/0592/5152/3702/files/AMP_LOGO_FULL.svg?v=1735227680" 
@@ -72,8 +71,6 @@ const Layout = ({ children }: LayoutProps) => {
                 className="h-28" 
               />
             </Link>
-          ) : (
-            <div className="py-2"></div>
           )}
 
           <div className="w-full flex items-center justify-between">
@@ -85,13 +82,6 @@ const Layout = ({ children }: LayoutProps) => {
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-
-            {/* Small logo when scrolled */}
-            {isScrolled && (
-              <div className="md:flex items-center hidden">
-                <SmallLogo />
-              </div>
-            )}
 
             {/* Desktop navigation with NavigationMenu */}
             <div className="hidden md:block flex-grow">
@@ -121,9 +111,9 @@ const Layout = ({ children }: LayoutProps) => {
                       <ul className="grid w-[400px] gap-2 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                         <li className="row-span-3">
                           <NavigationMenuLink asChild>
-                            <a
+                            <Link
                               className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-brand-lightGreen/50 to-brand-green/50 p-6 no-underline outline-none focus:shadow-md"
-                              href="/collections"
+                              to="/collections"
                             >
                               <div className="mb-2 mt-4 text-lg font-medium text-black">
                                 All Collections
@@ -131,7 +121,7 @@ const Layout = ({ children }: LayoutProps) => {
                               <p className="text-sm leading-tight text-black/90">
                                 Explore our curated collections of premium tableware and decorative items
                               </p>
-                            </a>
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
@@ -172,160 +162,30 @@ const Layout = ({ children }: LayoutProps) => {
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="uppercase text-xs tracking-wide font-medium">Tableware</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                        <li className="row-span-3">
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-brand-lightGreen/50 to-brand-green/20 p-6 no-underline outline-none focus:shadow-md"
-                              href="/tableware"
-                            >
-                              <div className="mb-2 mt-4 text-lg font-medium text-black">
-                                Luxury Tableware
-                              </div>
-                              <p className="text-sm leading-tight text-black/90">
-                                Elevate your dining experience with our premium tableware collection
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <Link
-                            to="/tableware/plates"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Plates</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Dinner plates, salad plates and serving platters
-                            </p>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/tableware/glassware"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Glassware</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Wine glasses, water glasses and specialty drinkware
-                            </p>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/tableware/flatware"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Flatware</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Cutlery and serving utensils
-                            </p>
-                          </Link>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
+                    <Link 
+                      to="/tableware" 
+                      className={`uppercase text-xs tracking-wide font-medium px-4 ${location.pathname.includes('/tableware') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    >
+                      Tableware
+                    </Link>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="uppercase text-xs tracking-wide font-medium">Interior</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                        <li className="row-span-3">
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-brand-lightGreen/50 to-brand-green/20 p-6 no-underline outline-none focus:shadow-md"
-                              href="/interior"
-                            >
-                              <div className="mb-2 mt-4 text-lg font-medium text-black">
-                                Interior Collection
-                              </div>
-                              <p className="text-sm leading-tight text-black/90">
-                                Transform your space with our elegant interior decor
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <Link
-                            to="/interior/home-accents"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Home Accents</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Decorative accessories for your home
-                            </p>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/interior/textiles"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Textiles</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Premium linens, throws and cushions
-                            </p>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/interior/lighting"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Lighting</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Designer lamps and lighting solutions
-                            </p>
-                          </Link>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
+                    <Link 
+                      to="/interior"
+                      className={`uppercase text-xs tracking-wide font-medium px-4 ${location.pathname.includes('/interior') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    >
+                      Interior
+                    </Link>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="uppercase text-xs tracking-wide font-medium">Outdoor</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] grid-cols-1">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex select-none flex-col rounded-md bg-gradient-to-b from-brand-lightGreen/50 to-brand-green/20 p-6 no-underline outline-none focus:shadow-md"
-                              href="/outdoor"
-                            >
-                              <div className="mb-2 text-lg font-medium text-black">
-                                Outdoor Collection
-                              </div>
-                              <p className="text-sm leading-tight text-black/90">
-                                Durable and stylish options for outdoor entertaining
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <Link
-                            to="/outdoor/melamine"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Melamine Dinnerware</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Stylish and shatterproof options for outdoor dining
-                            </p>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/outdoor/acrylic"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">Acrylic Drinkware</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Beautiful and practical glasses for outdoor use
-                            </p>
-                          </Link>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
+                    <Link 
+                      to="/outdoor"
+                      className={`uppercase text-xs tracking-wide font-medium px-4 ${location.pathname.includes('/outdoor') ? 'text-brand-green' : 'text-gray-700 hover:text-brand-green transition-colors'}`}
+                    >
+                      Outdoor
+                    </Link>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
@@ -464,7 +324,7 @@ const Layout = ({ children }: LayoutProps) => {
               <Link to="/account" aria-label="Account" className="hover:text-brand-green transition-colors">
                 <User size={22} />
               </Link>
-              <CartIcon onClick={() => setIsCartOpen(true)} />
+              <CartIcon />
             </div>
           </div>
         </div>
