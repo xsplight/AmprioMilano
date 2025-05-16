@@ -6,6 +6,7 @@ import ProductGrid from '../components/ProductGrid';
 import FilterSidebar from '../components/filters/FilterSidebar';
 import SortDropdown from '../components/filters/SortDropdown';
 import { Filter, ArrowLeft, X } from 'lucide-react';
+import { useCart } from '../components/Cart';
 
 // This would be replaced with real data from Shopify Storefront API
 const mockProducts = [
@@ -50,6 +51,7 @@ const mockProducts = [
   }
 ];
 
+// Add more collections to handle more routes
 const mockCollections = {
   "versailles": {
     id: 1,
@@ -64,6 +66,48 @@ const mockCollections = {
     handle: "ecume-white",
     description: "Clean, minimal designs in pristine white porcelain for the modern home.",
     image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+  },
+  "ortigia-outdoor": {
+    id: 3,
+    title: "Ortigia Outdoor",
+    handle: "ortigia-outdoor",
+    description: "Durable, stylish tableware designed for al fresco dining and outdoor entertaining.",
+    image: "https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910"
+  },
+  "crystal-stemware": {
+    id: 4,
+    title: "Crystal Stemware",
+    handle: "crystal-stemware",
+    description: "Exquisitely crafted crystal glasses for every occasion and beverage.",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+  },
+  "ortigia": {
+    id: 5,
+    title: "Ortigia Collection",
+    handle: "ortigia",
+    description: "Inspired by the beauty of Sicily, our Ortigia collection brings Mediterranean charm to your table.",
+    image: "https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910"
+  },
+  "tableware": {
+    id: 6,
+    title: "Tableware Collection",
+    handle: "tableware",
+    description: "Elegant dining solutions for every occasion.",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
+  },
+  "outdoor": {
+    id: 7,
+    title: "Outdoor Collection",
+    handle: "outdoor",
+    description: "Durable and stylish options for outdoor entertaining.",
+    image: "https://ampriomilano.com/cdn/shop/files/Baci_Milano_ORTIGIA_outdoor_12_800x.jpg?v=1746214910"
+  },
+  "home-decor": {
+    id: 8,
+    title: "Home Decor Collection",
+    handle: "home-decor",
+    description: "Accent pieces to elevate your interior.",
+    image: "https://ampriomilano.com/cdn/shop/files/PLA3.MAM05_d45cf525-3092-41b6-9a16-624e47fed4b9_400x.png?v=1746355234"
   }
 };
 
@@ -74,6 +118,7 @@ const Collection = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState('featured');
+  const { addToCart } = useCart();
 
   // Simulate fetching collection data
   useEffect(() => {
@@ -90,6 +135,7 @@ const Collection = () => {
           setProducts(mockProducts);
         } else {
           // Handle not found case
+          console.error("Collection not found:", handle);
         }
       } catch (error) {
         console.error("Failed to fetch collection:", error);
@@ -104,6 +150,16 @@ const Collection = () => {
   const handleSortChange = (option: string) => {
     setSortOption(option);
     // This would trigger re-fetching or sorting of products
+  };
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.isSale && product.salePrice ? product.salePrice : product.price,
+      image: product.image,
+      quantity: 1
+    });
   };
 
   const sortOptions = [
@@ -202,7 +258,10 @@ const Collection = () => {
               </div>
               
               {/* Products */}
-              <ProductGrid products={products} columns={3} />
+              <ProductGrid 
+                products={products} 
+                columns={3}
+              />
               
               {/* Empty state */}
               {products.length === 0 && (

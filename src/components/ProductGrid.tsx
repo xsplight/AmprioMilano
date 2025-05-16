@@ -1,11 +1,14 @@
 
+import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
+import { useCart } from './Cart';
+import { ImageOff } from 'lucide-react';
 
 interface Product {
   id: number;
   name: string;
   price: number;
-  image: string;
+  image: string | null;
   hoverImage?: string;
   isNew?: boolean;
   isSale?: boolean;
@@ -31,6 +34,18 @@ const ProductGrid = ({
   columns = 4,
   layout = 'grid'
 }: ProductGridProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.isSale && product.salePrice ? product.salePrice : product.price,
+      image: product.image || '',
+      quantity: 1
+    });
+  };
+
   const getGridClass = () => {
     switch (columns) {
       case 2:
@@ -60,7 +75,16 @@ const ProductGrid = ({
             {products.map((product) => (
               <div key={product.id} className="product-line-item animate-hover-scale">
                 <div className="product-line-image">
-                  <img src={product.image} alt={product.name} className="w-full h-auto" />
+                  {product.image ? (
+                    <img src={product.image} alt={product.name} className="w-full h-auto" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-100 aspect-square">
+                      <div className="text-center">
+                        <ImageOff className="mx-auto text-gray-400 mb-2" size={32} />
+                        <p className="text-sm text-gray-500">No image available</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="product-line-details">
                   <h3 className="line-item-title">{product.name}</h3>
@@ -81,8 +105,13 @@ const ProductGrid = ({
                     )}
                   </div>
                   <div className="flex items-center space-x-4">
-                    <button className="fashion-btn">Add to Cart</button>
-                    <button className="fashion-btn-outline">View Details</button>
+                    <button 
+                      className="fashion-btn"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                    <Link to={`/product/${product.id}`} className="fashion-btn-outline">View Details</Link>
                   </div>
                 </div>
               </div>
@@ -107,7 +136,7 @@ const ProductGrid = ({
         {/* Product grid */}
         <div className={`grid ${getGridClass()} gap-x-6 gap-y-10`}>
           {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+            <ProductCard key={product.id} {...product} onAddToCart={() => handleAddToCart(product)} />
           ))}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./components/Cart";
 import Index from "./pages/Index";
 import Product from "./pages/Product";
 import About from "./pages/About";
@@ -27,25 +28,30 @@ const App = () => (
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/collections" element={<Collections />} />
-          <Route path="/collection/:handle" element={<Collection />} />
-          <Route path="/products" element={<AllProducts />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/returns" element={<Returns />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/thanks" element={<Thanks />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <CartProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/collections" element={<Collections />} />
+            <Route path="/collection/:handle" element={<Collection />} />
+            <Route path="/products" element={<AllProducts />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/returns" element={<Returns />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/thanks" element={<Thanks />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/tableware" element={<Collection />} />
+            <Route path="/interior" element={<Collection />} />
+            <Route path="/outdoor" element={<Collection />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
   </BrowserRouter>
