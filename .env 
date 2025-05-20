@@ -1,0 +1,2 @@
+VITE_SHOPIFY_ENDPOINT=https://8344ca-27.myshopify.com/api/2023-07/graphql.json
+VITE_SHOPIFY_STOREFRONT_TOKEN=0d4ec0486f9d96fb58c0e41d2a50a1f5
