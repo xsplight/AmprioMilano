@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, User, Phone, Truck } from 'lucide-react';
@@ -16,6 +15,7 @@ import {
   NavigationMenuLink
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel"
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -43,16 +43,38 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <>
-      {/* Announcement Bar - Height set to 56px */}
-      <div className="bg-brand-green text-white py-4 px-4 text-sm h-14">
-        <div className="container-custom flex justify-between items-center">
-          <div className="flex items-center">
-            <Truck size={18} className="mr-2" />
-            <div>FAST SHIPPING IN UAE <a href="/shipping" className="underline ml-1">learn more</a></div>
+      {/* Announcement Bar - анимированный на мобильных, статичный на десктопе */}
+      <div className="bg-brand-green text-white py-2 md:py-4 px-4 text-xs md:text-sm h-auto md:h-14">
+        <div className="container-custom flex flex-col md:flex-row justify-between items-center gap-1 md:gap-0">
+          {/* Мобильная версия: анимированный carousel */}
+          <div className="block md:hidden w-full">
+            <Carousel opts={{ loop: true, align: 'start' }}>
+              <CarouselContent>
+                <CarouselItem>
+                  <div className="flex items-center justify-center min-h-[28px]">
+                    <Truck size={16} className="mr-2" />
+                    <span>FAST SHIPPING IN UAE <a href="/shipping" className="underline ml-1">learn more</a></span>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="flex items-center justify-center min-h-[28px]">
+                    <Phone size={16} className="mr-2" />
+                    <span>+971 52 177 3471</span>
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
           </div>
-          <div className="flex items-center">
-            <Phone size={16} className="mr-2" />
-            <div>+971 52 177 3471</div>
+          {/* Десктопная версия: обычный flex */}
+          <div className="hidden md:flex w-full justify-between items-center">
+            <div className="flex items-center">
+              <Truck size={18} className="mr-2" />
+              <div>FAST SHIPPING IN UAE <a href="/shipping" className="underline ml-1">learn more</a></div>
+            </div>
+            <div className="flex items-center">
+              <Phone size={16} className="mr-2" />
+              <div>+971 52 177 3471</div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { getProductByHandle, getAllProducts } from '../api/shopifyProducts';
 import { Helmet } from 'react-helmet';
@@ -27,10 +27,11 @@ function getRandomItems(arr, count, excludeId) {
 
 const Product = () => {
   const { handle } = useParams<{ handle: string }>();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<any>(null);
   const [allProducts, setAllProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedColor, setSelectedColor] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedVariant, setSelectedVariant] = useState<any>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -39,31 +40,111 @@ const Product = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    if (!handle) return;
-    setLoading(true);
-    Promise.all([
-      getProductByHandle(handle),
-      getAllProducts()
-    ])
-      .then(([prod, all]) => {
-        setProduct(prod);
-        setAllProducts(all);
-        // Выбираем первый цвет по умолчанию
-        const colorOpt = prod?.options?.find((o) => o.name.toLowerCase() === 'color');
-        setSelectedColor(colorOpt?.values?.[0] || '');
-        // Инициализируем mainImage
-        if (prod && prod.images && prod.images.length > 0) {
-          setMainImage(prod.images[0].url);
+    const fetchProduct = async () => {
+      setIsLoading(true);
+      try {
+        if (!handle) return;
+        const data = await getProductByHandle(handle);
+        if (!data) throw new Error("Product not found");
+
+        setProduct(data);
+        setAllProducts(await getAllProducts());
+
+        // Set default selected variant to the first one
+        if (data.variants && data.variants.length > 0) {
+          setSelectedVariant(data.variants[0]);
+
+          // Initialize selected options from the first variant
+          const initialOptions: Record<string, string> = {};
+          data.variants[0].selectedOptions.forEach((option: any) => {
+            initialOptions[option.name] = option.value;
+          });
+          setSelectedOptions(initialOptions);
         }
-      })
-      .finally(() => setLoading(false));
+
+        // Инициализируем mainImage
+        if (data && data.images && data.images.length > 0) {
+          setMainImage(data.images[0].url);
+        }
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [handle]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!product) return <div>Product not found</div>;
+  const handleOptionChange = (optionName: string, optionValue: string) => {
+    const newSelectedOptions = {
+      ...selectedOptions,
+      [optionName]: optionValue,
+    };
+
+    setSelectedOptions(newSelectedOptions);
+
+    // Find the variant that matches all selected options
+    const matchingVariant = product.variants.find((variant: any) => {
+      return variant.selectedOptions.every((option: any) => {
+        return newSelectedOptions[option.name] === option.value;
+      });
+    });
+
+    if (matchingVariant) {
+      setSelectedVariant(matchingVariant);
+    }
+  };
+
+  const handleQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedVariant) return;
+
+    addToCart({
+      id: selectedVariant.id,
+      name: product.title,
+      price: selectedVariant.price,
+      image: selectedVariant.image?.url || product.images[0]?.url,
+      quantity,
+    });
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 1500);
+    toast({
+      title: "Added to bag",
+      description: `${product.title} × ${quantity} added to your shopping bag`,
+      duration: 3000,
+    });
+    setTimeout(() => setIsCartOpen(true), 800);
+  };
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container-custom py-16 text-center">
+          <h1 className="text-3xl font-serif mb-4">Loading…</h1>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!product) {
+    return (
+      <Layout>
+        <div className="container-custom py-16 text-center">
+          <h1 className="text-3xl font-serif mb-4">Product Not Found</h1>
+          <p className="text-gray-600 mb-8">We couldn't find the product you're looking for.</p>
+          <Link to="/products" className="fashion-btn">
+            Browse All Products
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
 
   const images = product.images.map((img) => img.url);
-  const mainVariant = product.variants[0] || {};
 
   // All products of this line (same collection)
   let sameLine = [];
@@ -88,16 +169,6 @@ const Product = () => {
       handle: p.handle,
     }));
   }
-  // Для отладки
-  console.log('sameLine', sameLine, 'product.collections', product.collections, 'allProducts', allProducts);
-
-  // Формируем массив цветов с мини-превью
-  const colorOptions = product.variants
-    .map((v) => {
-      const color = v.selectedOptions?.find((opt) => opt.name.toLowerCase() === 'color')?.value;
-      return color ? { color, image: v.image?.url || product.images[0]?.url } : null;
-    })
-    .filter(Boolean);
 
   // Related products (random)
   const relatedProducts = getRandomItems(allProducts, 3, product.id).map((p) => ({
@@ -125,30 +196,12 @@ const Product = () => {
     handle: p.handle,
   }));
 
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.title,
-      price: mainVariant.price,
-      image: images[0],
-      quantity: quantity
-    });
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 1500);
-    toast({
-      title: "Added to bag",
-      description: `${product.title} × ${quantity} added to your shopping bag`,
-      duration: 3000,
-    });
-    setTimeout(() => setIsCartOpen(true), 800);
-  };
-
   return (
     <Layout>
       {/* Cart component */}
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       {/* Breadcrumb */}
-      <ProductBreadcrumb productName={product.title} />
+      <ProductBreadcrumb product={product} />
       <div className="container-custom pt-4 pb-8">
         {/* Back button */}
         <BackButton />
@@ -164,43 +217,50 @@ const Product = () => {
           {/* Product Details */}
           <div className="lg:w-2/5">
             <ProductInfo 
-              name={product.title}
-              itemNo={mainVariant.sku}
-              diameter={product.options.find((o) => o.name.toLowerCase().includes('size'))?.values[0] || ''}
-              price={mainVariant.price}
-              inStock={mainVariant.quantityAvailable}
+              product={product}
+              variant={selectedVariant}
               deliveryTime={'4-5 working days'}
-              currency={mainVariant.currency || 'AED'}
             />
-            <ProductAttributes 
-              materials={product.options.find((o) => o.name.toLowerCase() === 'material')?.values || []}
-              diameter={product.options.find((o) => o.name.toLowerCase().includes('size'))?.values[0] || ''}
-              sku={mainVariant.sku}
-            />
-            <ProductColorSelector 
-              colorOptions={colorOptions}
-              selectedColor={selectedColor}
+            {/* Color selector */}
+            <ProductColorSelector
+              colorOptions={product.variants
+                .map((v: any) => {
+                  const color = v.selectedOptions?.find((opt: any) => opt.name.toLowerCase() === 'color')?.value;
+                  return color ? { color, image: v.image?.url || product.images[0]?.url } : null;
+                })
+                .filter(Boolean)}
+              selectedColor={selectedOptions['Color']}
               onColorChange={(color, image) => {
-                setSelectedColor(color);
+                handleOptionChange('Color', color);
                 if (image) setMainImage(image);
               }}
             />
-            <ProductQuantitySelector 
-              initialQuantity={quantity} 
-              onQuantityChange={setQuantity}
+            {/* Quantity selector */}
+            <ProductQuantitySelector
+              initialQuantity={quantity}
+              onQuantityChange={handleQuantityChange}
             />
-            <ProductActions 
+            {/* Add to cart button */}
+            <ProductActions
               onAddToCart={handleAddToCart}
-              price={mainVariant.price}
+              price={selectedVariant?.price}
               quantity={quantity}
               productName={product.title}
               isAddingToCart={addedToCart}
             />
-            <ProductServices />
-            <ProductTabs 
-              description={product.description}
-              details={product.options.map((o) => `${o.name}: ${o.values.join(', ')}`)}
+            {/* Product attributes */}
+            <ProductAttributes 
+              materials={product.options.find((o) => o.name.toLowerCase() === 'material')?.values || []}
+              diameter={product.options.find((o) => o.name.toLowerCase().includes('size'))?.values[0] || ''}
+              sku={selectedVariant?.sku}
             />
+            {/* Product tabs (аккордеон на мобильных) */}
+            <ProductTabs
+              description={product.description}
+              details={product.options.map((o: any) => `${o.name}: ${o.values.join(', ')}`)}
+            />
+            {/* Product services */}
+            <ProductServices />
           </div>
         </div>
         {/* All products in this line - Section */}

@@ -38,12 +38,16 @@ function mapShopifyToProductCard(product: any) {
   };
 }
 
+const PAGE_SIZE = 30;
+
 const AllProducts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<any[]>([]);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState('featured');
   const [filters, setFilters] = useState<any>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -119,8 +123,28 @@ const AllProducts = () => {
   // Маппинг для ProductGrid
   const productGridData = sortedProducts.map(mapShopifyToProductCard);
 
+  // Пагинация
+  const totalPages = Math.ceil(productGridData.length / PAGE_SIZE);
+  const paginatedProducts = showAll
+    ? productGridData
+    : productGridData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const handleSortChange = (option: string) => {
     setSortOption(option);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleShowAll = () => {
+    setShowAll(true);
+  };
+
+  const handleShowPaged = () => {
+    setShowAll(false);
+    setCurrentPage(1);
   };
 
   return (
@@ -194,7 +218,42 @@ const AllProducts = () => {
                 ))}
               </div>
             ) : (
-              <ProductGrid products={productGridData} columns={4} />
+              <ProductGrid products={paginatedProducts} columns={4} isLoading={isLoading} />
+            )}
+            {/* Пагинация */}
+            {!isLoading && productGridData.length > PAGE_SIZE && !showAll && (
+              <div className="flex flex-wrap justify-center items-center gap-2 mt-8">
+                <button
+                  className="px-3 py-1 rounded border text-sm disabled:opacity-50"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >Назад</button>
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    className={`px-3 py-1 rounded border text-sm ${currentPage === i + 1 ? 'bg-brand-green text-white' : ''}`}
+                    onClick={() => handlePageChange(i + 1)}
+                  >{i + 1}</button>
+                ))}
+                <button
+                  className="px-3 py-1 rounded border text-sm disabled:opacity-50"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >Вперёд</button>
+                <button
+                  className="ml-4 px-4 py-1 rounded bg-gray-100 text-sm border"
+                  onClick={handleShowAll}
+                >Показать все</button>
+              </div>
+            )}
+            {/* Кнопка "Показать постранично" если выбрано "Показать все" */}
+            {!isLoading && showAll && productGridData.length > PAGE_SIZE && (
+              <div className="flex justify-center mt-8">
+                <button
+                  className="px-4 py-2 rounded bg-gray-100 border text-sm"
+                  onClick={handleShowPaged}
+                >Показать постранично</button>
+              </div>
             )}
             {/* Empty state */}
             {!isLoading && filteredProducts.length === 0 && (
